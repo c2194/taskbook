@@ -1,0 +1,744 @@
+<html><head>
+    <meta charset="utf-8">
+    <title>Admin UI 框体布局 - Layui 文档</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://hm.baidu.com/hm.js?363b2abe8678eec8a6850500ea63a63b"></script><script>;!function(){self!==parent&&(location.href="about:blank")}();</script>
+    <link href="//res.sentcss.com/layui/v/2.8.8/css/layui.css" rel="stylesheet">
+    <link href="//res.sentcss.com/static/dist/docs/2.8/css/global.css?v=18" rel="stylesheet">
+    <script>
+    (function(){if(window.JSON&&window.JSON.parse){var c=document.getElementsByTagName("head"),a=document.createElement("link");try{var b=JSON.parse(localStorage.layui)}catch(d){b={}}"dark"===b.themeMode&&(a.href="//res.sentcss.com/static/dist/docs/2.8/css/layui-theme-dark.css?v=18",a.rel="stylesheet",a.id="layuicss-theme-dark",c[0].appendChild(a))}})();
+    </script>
+  <style>.wwads-horizontal,.wwads-vertical{background-color:#f4f8fa;padding:5px;min-height:120px;margin-top:20px;box-sizing:border-box;border-radius:3px;font-family:sans-serif;display:flex;min-width:150px;position:relative;overflow:hidden}.wwads-horizontal{flex-wrap:wrap;justify-content:center}.wwads-vertical{flex-direction:column;align-items:center;padding-bottom:32px}.wwads-horizontal a,.wwads-vertical a{text-decoration:none}.wwads-horizontal .wwads-content,.wwads-horizontal .wwads-img,.wwads-vertical .wwads-content,.wwads-vertical .wwads-img{margin:5px}.wwads-horizontal .wwads-content{flex:130px;text-align:left}.wwads-vertical .wwads-content{margin-top:10px;text-align:left}.wwads-content .wwads-text,.wwads-horizontal .wwads-text{font-size:14px;line-height:1.4;color:#0e1011;-webkit-font-smoothing:antialiased;word-break:break-word}.wwads-horizontal .wwads-poweredby,.wwads-vertical .wwads-poweredby{display:flex;align-items:center;margin-top:1em}.wwads-vertical .wwads-poweredby{position:absolute;left:10px;bottom:10px;display:flex;align-items:center}.wwads-horizontal .wwads-poweredby .wwads-logo,.wwads-vertical .wwads-poweredby .wwads-logo{background:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 210' fill='%23a6b7bf'%3E%3Cpath d='M24.25 211.46L0 197.46l57-98.73a74.004 74.004 0 11128.18 74l-7 12.12-24.25-14 7-12.12a46.002 46.002 0 00-79.68-46z'/%3E%3Cpath d='M121.21 209.73a74.07 74.07 0 01-64.21-37l-7-12.12 24.25-14 7 12.12a46.002 46.002 0 1079.68-46l-57-98.73 24.25-14 57 98.73a74 74 0 01-64 111z'/%3E%3Cpath d='M235.09 209.73h-114a74 74 0 010-148h14v28h-14a46 46 0 000 92h114z'/%3E%3C/svg%3E") no-repeat;padding:0 1px 11px 11px}.wwads-horizontal .wwads-poweredby .wwads-logo-text,.wwads-vertical .wwads-poweredby .wwads-logo-text{font-size:11px;margin-left:3px;color:#a6b7bf}.wwads-horizontal .wwads-hide,.wwads-vertical .wwads-hide{position:absolute;right:-23px;bottom:-23px;width:46px;height:46px;border-radius:23px;transition:all .3s ease-in-out;cursor:pointer}.wwads-horizontal .wwads-hide .hide-svg,.wwads-vertical .wwads-hide .hide-svg{position:absolute;left:10px;top:10px;background:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='7' fill='%23a6b7bf'%3E%3Cpath d='M.879.672L3 2.793 5.121.672a.5.5 0 11.707.707L3.708 3.5l2.12 2.121a.5.5 0 11-.707.707l-2.12-2.12-2.122 2.12a.5.5 0 11-.707-.707l2.121-2.12L.172 1.378A.5.5 0 01.879.672z'/%3E%3C/svg%3E") no-repeat}.wwads-horizontal .wwads-hide:hover,.wwads-vertical .wwads-hide:hover{background:rgb(0 0 0/.05)}</style></head>
+  <body>
+  <div class="layui-header ws-header ws-bg-light">
+    <div class="layui-container">
+      <div class="ws-logo">
+        <a class="logo" href="/">
+          <img src="//res.sentcss.com/static/images/layui/logo.png" alt="layui">
+        </a>
+      </div>
+      <div class="ws-header-assist">
+        <div class="layui-form layui-hide-xs ws-search" lay-filter="LAY-ws-header-component"><select lay-search="" lay-filter="component"><option value="">搜索</option><optgroup label="常用组件">,<option value="form/">表单 Form</option>,<option value="table/">表格 Table</option>,<option value="layer/">弹层 Layer</option>,</optgroup><optgroup label="布局">,<option value="layout/">框体布局 Layout</option>,<option value="layout/grid.html">栅格布局 Grid</option>,</optgroup><optgroup label="通用">,<option value="color/">颜色 Color</option>,<option value="button/">按钮 Button</option>,<option value="icon/">图标 Icon</option>,<option value="anim/">动画 Anim</option>,</optgroup><optgroup label="表单">,<option value="form/">表单组件 Form</option>,<option value="form/input.html">输入框 Input</option>,<option value="form/input.html">多行输入框 Textarea</option>,<option value="form/select.html">选择框 Select</option>,<option value="form/checkbox.html">复选框 Checkbox</option>,<option value="form/radio.html">单选框 Radio</option>,</optgroup><optgroup label="展示">,<option value="table/">表格 Table</option>,<option value="laypage/">分页 Laypage</option>,<option value="treeTable/">树形表格 TreeTable</option>,<option value="nav/">导航菜单 Nav</option>,<option value="menu/">基础菜单 Menu</option>,<option value="tab/">选项卡 Tab</option>,<option value="badge/">徽章 Badge</option>,<option value="auxiliar/#blockquote">引用 Blockquote</option>,<option value="auxiliar/#fieldset">字段集 Fieldset</option>,<option value="auxiliar/#hr">水平线 hr</option>,<option value="class/">公共类 Class</option>,<option value="panel/">面板 Panel</option>,<option value="panel/#card">卡片面板 Card</option>,<option value="panel/#collapse">折叠面板 Collapse</option>,<option value="progress/">进度条 Progress</option>,<option value="timeline/">时间线 Timeline</option>,<option value="fixbar/">固定条 Fixbar</option>,<option value="tree/">树组件 Tree</option>,<option value="carousel/">轮播 Carousel</option>,<option value="flow/">流加载 Flow</option>,<option value="code/">代码预览 Code</option>,</optgroup><optgroup label="交互">,<option value="layer/">弹出层 Layer</option>,<option value="laydate/">日期与时间 Laydate</option>,<option value="upload/">上传 Upload</option>,<option value="dropdown/">下拉菜单 Dropdown</option>,<option value="colorpicker/">颜色选择器 Colorpicker</option>,<option value="transfer/">穿梭框 Transfer</option>,<option value="slider/">滑块 Slider</option>,<option value="rate/">评分 Rate</option>,</optgroup><optgroup label="其他">,<option value="laytpl/">模板引擎 Laytpl</option>,<option value="util/">工具模块 Util</option>,</optgroup><optgroup label="主题">,<option value="https://dev.layuion.com/themes/layim/">LayIM</option>,<option value="https://dev.layuion.com/themes/layuiAdmin/">layuiAdmin</option>,</optgroup></select><div class="layui-form-select"><div class="layui-select-title"><input type="text" placeholder="搜索" value="" class="layui-input"><i class="layui-edge"></i></div><dl class="layui-anim layui-anim-upbit layui-select-group"><dd lay-value="" class="layui-select-tips">搜索</dd><dt>常用组件</dt><dd lay-value="form/" class="">表单 Form</dd><dd lay-value="table/" class="">表格 Table</dd><dd lay-value="layer/" class="">弹层 Layer</dd><dt>布局</dt><dd lay-value="layout/" class="">框体布局 Layout</dd><dd lay-value="layout/grid.html" class="">栅格布局 Grid</dd><dt>通用</dt><dd lay-value="color/" class="">颜色 Color</dd><dd lay-value="button/" class="">按钮 Button</dd><dd lay-value="icon/" class="">图标 Icon</dd><dd lay-value="anim/" class="">动画 Anim</dd><dt>表单</dt><dd lay-value="form/" class="">表单组件 Form</dd><dd lay-value="form/input.html" class="">输入框 Input</dd><dd lay-value="form/input.html" class="">多行输入框 Textarea</dd><dd lay-value="form/select.html" class="">选择框 Select</dd><dd lay-value="form/checkbox.html" class="">复选框 Checkbox</dd><dd lay-value="form/radio.html" class="">单选框 Radio</dd><dt>展示</dt><dd lay-value="table/" class="">表格 Table</dd><dd lay-value="laypage/" class="">分页 Laypage</dd><dd lay-value="treeTable/" class="">树形表格 TreeTable</dd><dd lay-value="nav/" class="">导航菜单 Nav</dd><dd lay-value="menu/" class="">基础菜单 Menu</dd><dd lay-value="tab/" class="">选项卡 Tab</dd><dd lay-value="badge/" class="">徽章 Badge</dd><dd lay-value="auxiliar/#blockquote" class="">引用 Blockquote</dd><dd lay-value="auxiliar/#fieldset" class="">字段集 Fieldset</dd><dd lay-value="auxiliar/#hr" class="">水平线 hr</dd><dd lay-value="class/" class="">公共类 Class</dd><dd lay-value="panel/" class="">面板 Panel</dd><dd lay-value="panel/#card" class="">卡片面板 Card</dd><dd lay-value="panel/#collapse" class="">折叠面板 Collapse</dd><dd lay-value="progress/" class="">进度条 Progress</dd><dd lay-value="timeline/" class="">时间线 Timeline</dd><dd lay-value="fixbar/" class="">固定条 Fixbar</dd><dd lay-value="tree/" class="">树组件 Tree</dd><dd lay-value="carousel/" class="">轮播 Carousel</dd><dd lay-value="flow/" class="">流加载 Flow</dd><dd lay-value="code/" class="">代码预览 Code</dd><dt>交互</dt><dd lay-value="layer/" class="">弹出层 Layer</dd><dd lay-value="laydate/" class="">日期与时间 Laydate</dd><dd lay-value="upload/" class="">上传 Upload</dd><dd lay-value="dropdown/" class="">下拉菜单 Dropdown</dd><dd lay-value="colorpicker/" class="">颜色选择器 Colorpicker</dd><dd lay-value="transfer/" class="">穿梭框 Transfer</dd><dd lay-value="slider/" class="">滑块 Slider</dd><dd lay-value="rate/" class="">评分 Rate</dd><dt>其他</dt><dd lay-value="laytpl/" class="">模板引擎 Laytpl</dd><dd lay-value="util/" class="">工具模块 Util</dd><dt>主题</dt><dd lay-value="https://dev.layuion.com/themes/layim/" class="">LayIM</dd><dd lay-value="https://dev.layuion.com/themes/layuiAdmin/" class="">layuiAdmin</dd></dl></div><i class="layui-icon layui-icon-search"></i></div>
+        <div class="layui-hide-xs ws-notice"></div>
+      </div>
+      
+      <div class="ws-header-menu">
+        <ul class="layui-nav layui-bg-gray ws-bg-light" id="LAY_NAV_TOP">
+          <li class="layui-nav-item layui-this" data-dir="docs">
+            <a href="/docs/2.8/">组件</a> 
+          </li>
+          <li class="layui-nav-item" data-dir="notes">
+            <a href="/notes/">笔记</a> 
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">2.8.8<i class="layui-icon layui-icon-down layui-nav-more"></i></a>
+            <dl class="layui-nav-child layui-nav-child-c">  
+              <dd lay-unselect="" class="layui-this"><a href="/">2.8.8</a></dd>
+              <dd lay-unselect=""><a href="/2.7/">2.7.6</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a href="javascript:;">
+              <!--<span class="layui-badge-dot" style="left:0; right: auto; margin: -4px 0 0 5px;"></span>--> 
+              生态
+            <i class="layui-icon layui-icon-down layui-nav-more"></i></a>
+            <dl class="layui-nav-child layui-nav-child-r" style="margin-right: -21px;">
+              <dd lay-unselect="">
+                <a href="//dev.layuion.com/extend/" target="_blank">Layui 第三方扩展组件</a>
+              </dd>
+              <dd lay-unselect="">
+                <a href="https://github.com/Sight-wcg/layui-theme-dark" target="_blank" lay-unselect="">
+                  Layui 深色主题 <span>(社区贡献)</span>
+                </a>
+              </dd>
+              <dd lay-unselect="">
+                <a href="https://gitee.com/layui/layui-vue/" target="_blank" lay-unselect="">
+                  Layui of Vue <span>(他人实现)</span>
+                </a>
+              </dd>
+            </dl>
+          </li>
+        <span class="layui-nav-bar" style="left: 19px; top: 57px; width: 0px; opacity: 0;"></span></ul>
+        <div class="ws-header-more">
+          <i class="layui-icon layui-icon-shrink-right"></i>
+        </div>
+        <div class="ws-header-tool ws-bg-light">
+          <div class="layui-form ws-header-theme" lay-filter="header-theme">
+            <input type="checkbox" name="theme-mode" id="ID-header-theme-mode" lay-filter="header-theme-mode" lay-skin="switch" title=""><div class="layui-unselect layui-form-switch" lay-skin="switch"><div> 
+              <i class="layui-icon layui-icon-light"></i>
+            </div><i></i></div>
+            <div lay-checkbox="">
+              <i class="layui-icon layui-icon-moon"></i> | 
+              <i class="layui-icon layui-icon-light"></i>
+            </div>
+          </div>
+          <div>
+            <a href="https://github.com/layui/layui" target="_blank" title="Github">
+              <i class="layui-icon layui-icon-github layui-font-20"></i>
+            </a>
+          </div>
+          <div>
+            <a href="https://gitee.com/layui/layui" target="_blank" title="Gitee">
+              <i class="layui-icon layui-icon-gitee layui-font-20" style="color: #C71D23;"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 让 IE8/9 兼容响应式栅格 -->
+  <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+   
+  <div class="layui-container ws-container">
+    
+  <div class="layui-panel ws-menu">
+    <ul class="layui-menu layui-menu-lg ws-docs-menu">
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">基础</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/">
+                <span>开始使用</span> 
+                <span class="layui-font-12 layui-font-gray">Getting Started</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/base.html">
+                <span>底层方法</span>
+                <span class="layui-font-12 layui-font-gray">Base Function</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/modules.html">
+                <span>模块系统</span>
+                <span class="layui-font-12 layui-font-gray">Modules</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/versions.html">
+                <span>更新日志</span>
+                <span class="layui-font-12 layui-font-gray">Versions</span>
+                <span class="layui-badge-dot"></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">布局</div>
+        <ul>
+          <li class="layui-menu-item-checked2">
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/layout/">
+                <span>框体</span>
+                <span class="layui-font-12 layui-font-gray">Layout</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/layout/grid.html">
+                <span>栅格</span>
+                <span class="layui-font-12 layui-font-gray">Grid</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">通用</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/color/">
+                <span>颜色</span>
+                <span class="layui-font-12 layui-font-gray">Color</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/button/">
+                <span>按钮</span>
+                <span class="layui-font-12 layui-font-gray">Button</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/icon/">
+                <span>图标</span>
+                <span class="layui-font-12 layui-font-gray">Icon</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/anim/">
+                <span>动画</span>
+                <span class="layui-font-12 layui-font-gray">Anim</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">表单</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/form/">
+                <span>表单组件</span>
+                <span class="layui-font-12 layui-font-gray">Form</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/form/input.html">
+                <span>输入框</span>
+                <span class="layui-font-12 layui-font-gray">Input / Textarea</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/form/select.html">
+                <span>选择框</span>
+                <span class="layui-font-12 layui-font-gray">Select</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/form/checkbox.html">
+                <span>复选框</span>
+                <span class="layui-font-12 layui-font-gray">Checkbox</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/form/radio.html">
+                <span>单选框</span>
+                <span class="layui-font-12 layui-font-gray">Radio</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">展示</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/table/">
+                <span>表格</span>
+                <span class="layui-font-12 layui-font-gray">Table</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/laypage/">
+                <span>分页</span>
+                <span class="layui-font-12 layui-font-gray">Laypage</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/treeTable/">
+                <span>树形表格</span>
+                <span class="layui-font-12 layui-font-gray">TreeTable</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/nav/">
+                <span>导航菜单</span>
+                <span class="layui-font-12 layui-font-gray">Nav</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/menu/">
+                <span>基础菜单</span>
+                <span class="layui-font-12 layui-font-gray">Menu</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/tab/">
+                <span>选项卡</span>
+                <span class="layui-font-12 layui-font-gray">Tab</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/badge/">
+                <span>徽章</span>
+                <span class="layui-font-12 layui-font-gray">Badge</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/auxiliar/">
+                <span>辅助</span>
+                <span class="layui-font-12 layui-font-gray">Blockquote / Fieldset / hr</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/class/">
+                <span>公共类</span>
+                <span class="layui-font-12 layui-font-gray">Class</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/panel/">
+                <span>面板</span>
+                <span class="layui-font-12 layui-font-gray">Panel / Card / Collapse</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/progress/">
+                <span>进度条</span>
+                <span class="layui-font-12 layui-font-gray">Progress</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/timeline/">
+                <span>时间线</span>
+                <span class="layui-font-12 layui-font-gray">Timeline</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/fixbar/">
+                <span>固定条</span>
+                <span class="layui-font-12 layui-font-gray">Fixbar</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/tree/">
+                <span>树组件</span>
+                <span class="layui-font-12 layui-font-gray">Tree</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/carousel/">
+                <span>轮播</span>
+                <span class="layui-font-12 layui-font-gray">Carousel</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/flow/">
+                <span>流加载</span>
+                <span class="layui-font-12 layui-font-gray">Flow</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/code/">
+                <span>代码预览组件</span>
+                <span class="layui-font-12 layui-font-gray">Code</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">交互</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/layer/">
+                <span>弹出层</span>
+                <span class="layui-font-12 layui-font-gray">Layer</span>
+                <span class="layui-badge-dot layui-bg-green"></span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/laydate/">
+                <span>日期与时间选择</span>
+                <span class="layui-font-12 layui-font-gray">Laydate</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/upload/">
+                <span>上传</span>
+                <span class="layui-font-12 layui-font-gray">Upload</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/dropdown/">
+                <span>下拉菜单</span>
+                <span class="layui-font-12 layui-font-gray">Dropdown</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/colorpicker/">
+                <span>颜色选择器</span>
+                <span class="layui-font-12 layui-font-gray">Colorpicker</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/transfer/">
+                <span>穿梭框</span>
+                <span class="layui-font-12 layui-font-gray">Transfer</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/slider/">
+                <span>滑块</span>
+                <span class="layui-font-12 layui-font-gray">Slider</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/rate/">
+                <span>评分</span>
+                <span class="layui-font-12 layui-font-gray">Rate</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+        <div class="layui-menu-body-title">其他</div>
+        <ul>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/laytpl/">
+                <span>模板引擎</span>
+                <span class="layui-font-12 layui-font-gray">Laytpl</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="layui-menu-body-title">
+              <a href="/docs/2.8/util/">
+                <span>工具模块</span>
+                <span class="layui-font-12 layui-font-gray">Util</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </li>
+      
+    </ul>
+  </div>
+  
+    <div class="ws-content"><div class="ws-side"><div class="ws-side-fixed"><div class="ws-dir"><ul class="ws-dir-ul"><li class=""><a href="#examples">示例</a></li><li><a href="#adminui">Admin UI <span class="layui-badge-dot"></span></a></li></ul></div><div class="ws-sponsor"><div class="ws-sponsor-wrapper"><div style="width: 100%; height: 32px; line-height: 32px; cursor: pointer; background: none; color: #16b777;"><div id="tocSponsor" lay-layer="{
+    area: layui.$(window).width() < 800 ? ['100%', '100%'] : '800px',
+    skin: 'layui-text',
+    anim: 'slideUp',
+    isOutAnim: false
+  }">成为赞助者</div>
+  
+  <div class="layui-hide">
+    <p>Layui 是一套开源且免费的 Web UI 组件库，采用 MIT 许可发布。多年来，凭借原生态的开发模式和别具一格的内外风格，而被广泛应用，我们为此投入了无限的热爱。 多年来，尽管它在快速迭代的前端技术浪潮中冷暖交替，但我们始终尽最大的努力维持前行。 能为不计其数的平台提供价值，为开发者提供多一种的技术选择，正是我们依然坚持的本源。 </p>
+    
+    <p>若您认可 Layui 这一信念，并有兴趣提供助力，您可以了解以下途径：</p>
+  
+    <h3>展示位赞助</h3>
+    <p>在本站对应的位置放置您的 LOGO 及跳转链接。</p>
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>位置</th>
+          <th>素材</th>
+          <th>宽高</th>
+          <th>名额</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>全站右侧边栏</td>
+          <td>图片+链接</td>
+          <td>105*50px</td>
+          <td style="color: #16b777">8<!--<span style="color: #ccc;">（已满）</span>--></td>
+        </tr>
+        <tr>
+          <td>全站头部导航</td>
+          <td>文字+链接</td>
+          <td>最多可放 11 个字数</td>
+          <td style="color: #16b777;">1</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>您可以联系 <a href="mailto:xianxin@layui-inc.com" target="_blank">xianxin@layui-inc.com</a> 咨询展示位的详细事宜。</p>
+  
+    <h3>无偿捐赠</h3>
+    <p>您也可以通过以下平台为 Layui 提供无偿捐赠（量力而行）：</p>
+    <div class="layui-btn-container">
+      <a href="https://gitee.com/layui/layui?donate=true" class="layui-btn layui-btn-sm" style="background-color: #c61d22;" target="_blank">通过 Gitee 捐赠</a>
+    </div>
+    
+    <hr>
+    <p>您对 Layui 的关注，和每一项友善的举动，都已通过意念的电波传递到了创作者的脑海。<br>我们由衷感激所有精神的能量，它推动着我们不断前行。</p>
+    <p style="text-align: center; color: #16baaa;"> <span style="font-size: 16px;">·</span> </p>
+  </div>
+  </div><div><a href="http://gadmin8.com/?frm=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_5/168_1683723316337_5868.png" style="width: 90%;" id="tocSponsor-gadmin8" alt="gadmin8.com"></a></div><div><a href="https://www.suidc.cn/" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_5/suidc.svg" id="tocSponsor-suidc" style="width:86%;" alt="suidc.cn"></a></div><div><a href="https://gitee.com/zongzhige/shopxo?from=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_5/168_1684201649386_68237.png" id="tocSponsor-shopxo" alt="shopxo" style="max-width: 85%;"></a></div><div><a href="https://wooadmin.cn/page/12.html?from=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_5/168_1684212763870_92033.png" id="tocSponsor-wooadmin" alt="wooadmin" style="max-width: 95%;"></a></div><div><a href=" https://hashmart.cc/?from=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_5/168_1684347216167_22728.png" id="tocSponsor-hashmart" alt="hashmart.cc" style="max-width: 100%;"></a></div><div><a href="https://www.topthink.com/?from=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_6/topthink.svg" id="tocSponsor-topthink" alt="topthink" style="max-width: 80%;"></a></div><div><a href="https://www.crmeb.com/?from=layui" target="_blank" class="ws-sponsor-link"><img src="//oss.sentcss.com/upload/2023_6/168_1687935462822_84779.svg" id="tocSponsor-crmeb" alt="crmeb" style="position: relative; top: -1px; max-width: 90%;"></a></div><div style="color:#ff6a00;font-weight:700;"><a href="https://www.aliyun.com/activity/daily/bestoffer?userCode=ap0255is" target="_blank" class="ws-sponsor-link" style="color:#ff6a00;font-weight:700;"><div id="tocSponsor-ali">阿里云特惠</div></a></div><div style="width: 210px; height: auto; background-color: #f4f8fa;"><style>
+  .wwads-horizontal, .wwads-vertical{min-height: 237px;}
+  </style>
+  <div class="wwads-cn wwads-vertical" data-id="252" style="max-width:210px"><a href="https://wwads.cn/click/bait" target="_blank" rel="sponsored noopener" referrerpolicy="no-referrer-when-downgrade" style="display:none !important;"></a><a href="https://wwads.cn/click/bundle?code=rbtLOdEkNHooG88Swly4cONrFJ7qSL" onclick="_IsTrustedClick(event)" class="wwads-img" target="_blank" rel="sponsored noopener" referrerpolicy="no-referrer-when-downgrade"><img src="https://cdn.wwads.cn/creatives/anIuNmROogLo8TWrtTIIYmkONg96jYw1zi1KHDaK.png" width="130" alt="万维广告联盟"></a><div class="wwads-content"><a href="https://wwads.cn/click/bundle?code=rbtLOdEkNHooG88Swly4cONrFJ7qSL" onclick="_IsTrustedClick(event)" class="wwads-text" target="_blank" rel="sponsored noopener" referrerpolicy="no-referrer-when-downgrade">📊 <b>人人都是数据分析师</b>。仅需 5 分钟，数据变图表。众多精美 <b>BI</b> 大屏模板等你来选。</a><a href="https://wwads.cn/?utm_source=property-307&amp;utm_medium=footer" class="wwads-poweredby" title="点击了解万维广告联盟" target="_blank"><img class="wwads-logo"><span class="wwads-logo-text">广告</span></a></div><a class="wwads-hide" onclick="parentNode.remove()" title="隐藏广告"><svg class="hide-svg"></svg></a></div>
+  <script type="text/javascript" charset="UTF-8" src="https://cdn.wwads.cn/js/makemoney.js" async=""></script></div></div></div></div></div>
+      <div class="layui-text ws-text" id="WS-text">
+        <h1>框体布局</h1>
+  <blockquote class="layui-elem-quote">
+  <p>Layui 的主要应用场景是面向中后台的界面搭建，因此也提供了大框体布局方案。</p>
+  </blockquote>
+  <h2 id="examples" lay-toc="">示例</h2>
+  <div class="layui-code-preview"><div class="layui-tab layui-tab-brief" lay-filter="LAY-CODE-DF-0"><div class="layui-tab-title"><li lay-id="preview" class="layui-this">Preview</li><li lay-id="code">&lt;/&gt;</li></div><div class="layui-code-tools"><i class="layui-icon layui-icon-file-b" data-type="copy" title="复制代码"></i><i class="layui-icon layui-icon-screen-full" data-type="full" title="最大化显示"></i><i class="layui-icon layui-icon-release" data-type="window" title="在新窗口预览"></i></div></div><div class="layui-code-item layui-code-item-preview layui-border layui-show" style="height: 450px;"><iframe allowtransparency="true" frameborder="0" srcdoc="<!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset=&quot;utf-8&quot;>
+    <title>layout 管理界面大布局示例 - Layui</title>
+    <meta name=&quot;renderer&quot; content=&quot;webkit&quot;>
+    <meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;>
+    <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+    <link href=&quot;//cdn.staticfile.org/layui/2.8.8/css/layui.css&quot; rel=&quot;stylesheet&quot;>
+  </head>
+  <body>
+  <div class=&quot;layui-layout layui-layout-admin&quot;>
+    <div class=&quot;layui-header&quot;>
+      <div class=&quot;layui-logo layui-hide-xs layui-bg-black&quot;>layout demo</div>
+      <!-- 头部区域（可配合layui 已有的水平导航） -->
+      <ul class=&quot;layui-nav layui-layout-left&quot;>
+        <!-- 移动端显示 -->
+        <li class=&quot;layui-nav-item layui-show-xs-inline-block layui-hide-sm&quot; lay-header-event=&quot;menuLeft&quot;>
+          <i class=&quot;layui-icon layui-icon-spread-left&quot;></i>
+        </li>
+        <li class=&quot;layui-nav-item layui-hide-xs&quot;><a href=&quot;javascript:;&quot;>nav 1</a></li>
+        <li class=&quot;layui-nav-item layui-hide-xs&quot;><a href=&quot;javascript:;&quot;>nav 2</a></li>
+        <li class=&quot;layui-nav-item layui-hide-xs&quot;><a href=&quot;javascript:;&quot;>nav 3</a></li>
+        <li class=&quot;layui-nav-item&quot;>
+          <a href=&quot;javascript:;&quot;>nav groups</a>
+          <dl class=&quot;layui-nav-child&quot;>
+            <dd><a href=&quot;javascript:;&quot;>menu 11</a></dd>
+            <dd><a href=&quot;javascript:;&quot;>menu 22</a></dd>
+            <dd><a href=&quot;javascript:;&quot;>menu 33</a></dd>
+          </dl>
+        </li>
+      </ul>
+      <ul class=&quot;layui-nav layui-layout-right&quot;>
+        <li class=&quot;layui-nav-item layui-hide layui-show-sm-inline-block&quot;>
+          <a href=&quot;javascript:;&quot;>
+            <img src=&quot;//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png&quot; class=&quot;layui-nav-img&quot;>
+            tester
+          </a>
+          <dl class=&quot;layui-nav-child&quot;>
+            <dd><a href=&quot;javascript:;&quot;>Your Profile</a></dd>
+            <dd><a href=&quot;javascript:;&quot;>Settings</a></dd>
+            <dd><a href=&quot;javascript:;&quot;>Sign out</a></dd>
+          </dl>
+        </li>
+        <li class=&quot;layui-nav-item&quot; lay-header-event=&quot;menuRight&quot; lay-unselect>
+          <a href=&quot;javascript:;&quot;>
+            <i class=&quot;layui-icon layui-icon-more-vertical&quot;></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class=&quot;layui-side layui-bg-black&quot;>
+      <div class=&quot;layui-side-scroll&quot;>
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class=&quot;layui-nav layui-nav-tree&quot; lay-filter=&quot;test&quot;>
+          <li class=&quot;layui-nav-item layui-nav-itemed&quot;>
+            <a class=&quot;&quot; href=&quot;javascript:;&quot;>menu group 1</a>
+            <dl class=&quot;layui-nav-child&quot;>
+              <dd><a href=&quot;javascript:;&quot;>menu 1</a></dd>
+              <dd><a href=&quot;javascript:;&quot;>menu 2</a></dd>
+              <dd><a href=&quot;javascript:;&quot;>menu 3</a></dd>
+              <dd><a href=&quot;javascript:;&quot;>the links</a></dd>
+            </dl>
+          </li>
+          <li class=&quot;layui-nav-item&quot;>
+            <a href=&quot;javascript:;&quot;>menu group 2</a>
+            <dl class=&quot;layui-nav-child&quot;>
+              <dd><a href=&quot;javascript:;&quot;>list 1</a></dd>
+              <dd><a href=&quot;javascript:;&quot;>list 2</a></dd>
+              <dd><a href=&quot;javascript:;&quot;>超链接</a></dd>
+            </dl>
+          </li>
+          <li class=&quot;layui-nav-item&quot;><a href=&quot;javascript:;&quot;>click menu item</a></li>
+          <li class=&quot;layui-nav-item&quot;><a href=&quot;javascript:;&quot;>the links</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class=&quot;layui-body&quot;>
+      <!-- 内容主体区域 -->
+      <div style=&quot;padding: 15px;&quot;>
+        <blockquote class=&quot;layui-elem-quote layui-text&quot;>
+          Layui 框体布局内容主体区域
+        </blockquote>
+        <div class=&quot;layui-card layui-panel&quot;>
+          <div class=&quot;layui-card-header&quot;>
+            下面是充数内容，为的是出现滚动条
+          </div>
+          <div class=&quot;layui-card-body&quot;>
+          充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>充数内容<br>你还真滑到了底部呀
+          </div>
+        </div>
+        <br><br>
+      </div>
+    </div>
+    <div class=&quot;layui-footer&quot;>
+      <!-- 底部固定区域 -->
+      底部固定区域
+    </div>
+  </div>
+   
+  <script src=&quot;//cdn.staticfile.org/layui/2.8.8/layui.js&quot;></script>
+  <script>
+  //JS 
+  layui.use(['element', 'layer', 'util'], function(){
+    var element = layui.element;
+    var layer = layui.layer;
+    var util = layui.util;
+    var $ = layui.$;
+    
+    //头部事件
+    util.event('lay-header-event', {
+      menuLeft: function(othis){ // 左侧菜单事件
+        layer.msg('展开左侧菜单的操作', {icon: 0});
+      },
+      menuRight: function(){  // 右侧菜单事件
+        layer.open({
+          type: 1,
+          title: '更多',
+          content: '<div style=&quot;padding: 15px;&quot;>处理右侧面板的操作</div>',
+          area: ['260px', '100%'],
+          offset: 'rt', // 右上角
+          anim: 'slideLeft', // 从右侧抽屉滑出
+          shadeClose: true,
+          scrollbar: false
+        });
+      }
+    });
+  });
+  </script>
+  </body>
+  </html>"></iframe></div><pre class="layui-code layui-code-item layui-code-view layui-box" lay-options="{preview: 'iframe',style: 'height: 450px;', layout: ['preview', 'code'], tools: ['full','window']}"><ol class="layui-code-ol" style="height: 450px;"><li>&lt;!DOCTYPE html&gt;</li><li>&lt;html&gt;</li><li>&lt;head&gt;</li><li>  &lt;meta charset="utf-8"&gt;</li><li>  &lt;title&gt;layout 管理界面大布局示例 - Layui&lt;/title&gt;</li><li>  &lt;meta name="renderer" content="webkit"&gt;</li><li>  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"&gt;</li><li>  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</li><li>  &lt;link href="//cdn.staticfile.org/layui/2.8.8/css/layui.css" rel="stylesheet"&gt;</li><li>&lt;/head&gt;</li><li>&lt;body&gt;</li><li>&lt;div class="layui-layout layui-layout-admin"&gt;</li><li>  &lt;div class="layui-header"&gt;</li><li>    &lt;div class="layui-logo layui-hide-xs layui-bg-black"&gt;layout demo&lt;/div&gt;</li><li>    &lt;!-- 头部区域（可配合layui 已有的水平导航） --&gt;</li><li>    &lt;ul class="layui-nav layui-layout-left"&gt;</li><li>      &lt;!-- 移动端显示 --&gt;</li><li>      &lt;li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft"&gt;</li><li>        &lt;i class="layui-icon layui-icon-spread-left"&gt;&lt;/i&gt;</li><li>      &lt;/li&gt;</li><li>      &lt;li class="layui-nav-item layui-hide-xs"&gt;&lt;a href="javascript:;"&gt;nav 1&lt;/a&gt;&lt;/li&gt;</li><li>      &lt;li class="layui-nav-item layui-hide-xs"&gt;&lt;a href="javascript:;"&gt;nav 2&lt;/a&gt;&lt;/li&gt;</li><li>      &lt;li class="layui-nav-item layui-hide-xs"&gt;&lt;a href="javascript:;"&gt;nav 3&lt;/a&gt;&lt;/li&gt;</li><li>      &lt;li class="layui-nav-item"&gt;</li><li>        &lt;a href="javascript:;"&gt;nav groups&lt;/a&gt;</li><li>        &lt;dl class="layui-nav-child"&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 11&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 22&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 33&lt;/a&gt;&lt;/dd&gt;</li><li>        &lt;/dl&gt;</li><li>      &lt;/li&gt;</li><li>    &lt;/ul&gt;</li><li>    &lt;ul class="layui-nav layui-layout-right"&gt;</li><li>      &lt;li class="layui-nav-item layui-hide layui-show-sm-inline-block"&gt;</li><li>        &lt;a href="javascript:;"&gt;</li><li>          &lt;img src="//unpkg.com/outeres@0.0.10/img/layui/icon-v2.png" class="layui-nav-img"&gt;</li><li>          tester</li><li>        &lt;/a&gt;</li><li>        &lt;dl class="layui-nav-child"&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;Your Profile&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;Settings&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;dd&gt;&lt;a href="javascript:;"&gt;Sign out&lt;/a&gt;&lt;/dd&gt;</li><li>        &lt;/dl&gt;</li><li>      &lt;/li&gt;</li><li>      &lt;li class="layui-nav-item" lay-header-event="menuRight" lay-unselect&gt;</li><li>        &lt;a href="javascript:;"&gt;</li><li>          &lt;i class="layui-icon layui-icon-more-vertical"&gt;&lt;/i&gt;</li><li>        &lt;/a&gt;</li><li>      &lt;/li&gt;</li><li>    &lt;/ul&gt;</li><li>  &lt;/div&gt;</li><li>  &lt;div class="layui-side layui-bg-black"&gt;</li><li>    &lt;div class="layui-side-scroll"&gt;</li><li>      &lt;!-- 左侧导航区域（可配合layui已有的垂直导航） --&gt;</li><li>      &lt;ul class="layui-nav layui-nav-tree" lay-filter="test"&gt;</li><li>        &lt;li class="layui-nav-item layui-nav-itemed"&gt;</li><li>          &lt;a class="" href="javascript:;"&gt;menu group 1&lt;/a&gt;</li><li>          &lt;dl class="layui-nav-child"&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 1&lt;/a&gt;&lt;/dd&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 2&lt;/a&gt;&lt;/dd&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;menu 3&lt;/a&gt;&lt;/dd&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;the links&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;/dl&gt;</li><li>        &lt;/li&gt;</li><li>        &lt;li class="layui-nav-item"&gt;</li><li>          &lt;a href="javascript:;"&gt;menu group 2&lt;/a&gt;</li><li>          &lt;dl class="layui-nav-child"&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;list 1&lt;/a&gt;&lt;/dd&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;list 2&lt;/a&gt;&lt;/dd&gt;</li><li>            &lt;dd&gt;&lt;a href="javascript:;"&gt;超链接&lt;/a&gt;&lt;/dd&gt;</li><li>          &lt;/dl&gt;</li><li>        &lt;/li&gt;</li><li>        &lt;li class="layui-nav-item"&gt;&lt;a href="javascript:;"&gt;click menu item&lt;/a&gt;&lt;/li&gt;</li><li>        &lt;li class="layui-nav-item"&gt;&lt;a href="javascript:;"&gt;the links&lt;/a&gt;&lt;/li&gt;</li><li>      &lt;/ul&gt;</li><li>    &lt;/div&gt;</li><li>  &lt;/div&gt;</li><li>  &lt;div class="layui-body"&gt;</li><li>    &lt;!-- 内容主体区域 --&gt;</li><li>    &lt;div style="padding: 15px;"&gt;</li><li>      &lt;blockquote class="layui-elem-quote layui-text"&gt;</li><li>        Layui 框体布局内容主体区域</li><li>      &lt;/blockquote&gt;</li><li>      &lt;div class="layui-card layui-panel"&gt;</li><li>        &lt;div class="layui-card-header"&gt;</li><li>          下面是充数内容，为的是出现滚动条</li><li>        &lt;/div&gt;</li><li>        &lt;div class="layui-card-body"&gt;</li><li>        充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;充数内容&lt;br&gt;你还真滑到了底部呀</li><li>        &lt;/div&gt;</li><li>      &lt;/div&gt;</li><li>      &lt;br&gt;&lt;br&gt;</li><li>    &lt;/div&gt;</li><li>  &lt;/div&gt;</li><li>  &lt;div class="layui-footer"&gt;</li><li>    &lt;!-- 底部固定区域 --&gt;</li><li>    底部固定区域</li><li>  &lt;/div&gt;</li><li>&lt;/div&gt;</li><li> </li><li>&lt;script src="//cdn.staticfile.org/layui/2.8.8/layui.js"&gt;&lt;/script&gt;</li><li>&lt;script&gt;</li><li>//JS </li><li>layui.use(['element', 'layer', 'util'], function(){</li><li>  var element = layui.element;</li><li>  var layer = layui.layer;</li><li>  var util = layui.util;</li><li>  var $ = layui.$;</li><li>  </li><li>  //头部事件</li><li>  util.event('lay-header-event', {</li><li>    menuLeft: function(othis){ // 左侧菜单事件</li><li>      layer.msg('展开左侧菜单的操作', {icon: 0});</li><li>    },</li><li>    menuRight: function(){  // 右侧菜单事件</li><li>      layer.open({</li><li>        type: 1,</li><li>        title: '更多',</li><li>        content: '&lt;div style="padding: 15px;"&gt;处理右侧面板的操作&lt;/div&gt;',</li><li>        area: ['260px', '100%'],</li><li>        offset: 'rt', // 右上角</li><li>        anim: 'slideLeft', // 从右侧抽屉滑出</li><li>        shadeClose: true,</li><li>        scrollbar: false</li><li>      });</li><li>    }</li><li>  });</li><li>});</li><li>&lt;/script&gt;</li><li>&lt;/body&gt;</li><li>&lt;/html&gt;</li></ol></pre></div>
+  <br>
+  <blockquote class="layui-elem-quote">
+  <p>小贴士：以上是一个基础的框体布局方案，若要实现诸如 <code>iframe</code> 跳转、侧边菜单收缩等功能，还需按照实际的业务需求自主实现。当然，也可以采用社区已有的 AdminUI 主题方案，如：layuiAdmin 等。</p>
+  </blockquote>
+  <h2 id="adminui" lay-toc="{hot: true}">Admin UI</h2>
+  <p><a href="https://dev.layuion.com/themes/layuiadmin/" target="_blank">layuiAdmin</a> 是一套用于开发通用型管理系统的纯静态的 <code>HTML</code> 网页界面主题，基于开源的 Layui Web 组件库制作而成，没有任何后端程序及数据库存储等服务端代码。开发者使用该网页模板，可省去前端的大量工作，从而更高效地开发 Web 应用系统。</p>
+  
+      </div>
+      <div class="ws-text-tools">
+        
+        <a href="https://github.com/layui/layui/edit/2.x/docs/layout/index.md" rel="nofollow" target="_blank" title="在 Github 上编辑此文档">
+          <i class="layui-icon layui-icon-edit"></i>
+        </a>
+        
+      </div>
+    </div>
+  </div>
+  <div class="ws-menu-bar layui-bg-green layui-hide">
+    <i class="layui-icon layui-icon-spread-left"></i>
+  </div>
+    
+  <div class="layui-footer ws-footer">
+    <p>
+      Copyright © 2023 <a href="/">Layui</a> MIT Licensed</p>
+    <p id="LAY-footer-info">
+      <a href="https://gitee.com/layui/layui/blob/main/DISCLAIMER.md" rel="nofollow" target="_blank">免责声明</a> 
+      <a href="https://github.com/layui/layui/blob/main/LICENSE" rel="nofollow" target="_blank">开源协议</a>
+      <a href="https://gitee.com/layui/" target="_blank">开源生态</a>
+      <a href="https://codepen.io/layui/pen/bGxZXrd" rel="nofollow" target="_blank">在线测试</a>
+      <a href="https://gitee.com/layui/layui/issues" rel="nofollow" target="_blank">社区交流</a>
+    </p>
+    <p>
+      <span>
+        鸣谢：
+        <a href="https://www.upyun.com/?invite=SJ0wu6g2-&amp;referer=layui" target="_blank" sponsor="upyun" style="color: #23A7E8;">
+          <strong>又拍云</strong>
+        </a>
+        <a href="https://gitee.com/?referer=layui" target="_blank" sponsor="Gitee" style="color:#C71D23;">
+          <strong>Gitee</strong>
+        </a>
+        <a href="https://www.iconfont.cn/?referer=layui" target="_blank" sponsor="Gitee" style="color: #9B16FF;">
+          <strong>iconfont</strong>
+        </a>
+      </span>
+    </p>
+  </div>
+  <div class="ws-shade"></div>
+   
+  <script src="//res.sentcss.com/layui/v/2.8.8/layui.js"></script>
+  <script>
+  layui.config({
+    base: '//res.sentcss.com/static/dist/docs/2.8/modules/',
+    version: '18',
+    res: '//res.sentcss.com/static/dist/docs/',
+    curl: ''
+  }).use('global',function(w){w.a||w.r&&w.r()});
+  </script>
+   
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?363b2abe8678eec8a6850500ea63a63b";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+  
+  
+  <ul class="layui-fixbar"><li class="layui-icon layui-icon-more-vertical" lay-type="dir" style=""></li><li class="layui-icon layui-icon-top layui-fixbar-top" lay-type="top" style="display: none;"></li></ul></body></html>

@@ -1,0 +1,555 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+  <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
+ 
+</head>
+<style>
+  .layui-input-block2 {
+    margin-left: 60px;
+    min-height: 36px;
+}
+
+
+.layui-form-label2 {
+    position: relative;
+    float: left;
+    display: block;
+    padding: 9px 1px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+}
+.span_button {
+    height: 28px;
+    line-height: 28px;
+    background-color: #16baaa!important;
+    color: #fff!important;
+    position: relative;
+    display: inline-block;
+    padding: 0 6px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 2px;
+}
+.tl2 {
+    padding-top: 8px;
+    padding-left: 9px;
+}
+
+.rltb20 {   
+  margin-left: 20px;  
+}
+
+.rltb10 {  
+  margin-right: 10px;  
+  margin-left: 10px;  
+  margin-top: 10px;  
+  margin-bottom: 10px;  
+}
+
+.circle1{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto 10px;
+    text-align: center;
+    background-color: #009688;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 50%;
+}
+.site-doc-icon li .layui-anim {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto 10px;
+    text-align: center;
+    background-color: #009688;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 50%;
+}
+.icnstyle1 {  
+  background-color: #d0ddd0;  
+  color: black;  
+}
+.card2 {
+    margin-bottom: 15px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<script>
+    var get = getQueryParams();
+
+
+
+    var task_id = get['task_id'];
+    var sub_task_id = get['sub_task_id'];
+    function getQueryParams() {  
+    var queryParams = {};  
+    window.location.search.replace(/\??(?:([^=]+)=)?([^&#]+)(?:&#|$)/g, function(match, key, value) {  
+        queryParams[key] = value;  
+    });  
+    return queryParams;  
+    }  
+
+
+  function sendJson(data) {
+      axios.post('/endpoint', data)
+          .then(function(response) {
+            var rdata = response.data;
+            // [{'tc_id': 1, 'tc_name': '单次任务', 'tc_feature': 1}, {'tc_id': 2, 'tc_name': '长期日报任务', 'tc_feature': 2}]
+
+            // 判断response.g_command 是否为 "task_types"
+            if (rdata.g_command == "task_types") {
+                // 1. 查找 名字为 task_type 的select
+                var select = document.getElementById("task_type1");
+                //var select = document.getElementById("task_type");
+                select.options.length = 0;
+                // 2. 重新添加option
+                for (var i = 0; i < rdata.data.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = rdata.data[i].tc_id;
+                    option.text = rdata.data[i].tc_name;
+                    select.add(option);
+                }
+
+                
+            
+            
+            }
+            if (rdata.g_command == "get_users") {
+
+                layui.use(function(){
+                var transfer = layui.transfer;
+                // 数据
+                var data = rdata.data;
+                // 渲染
+                transfer.render({
+                    elem: '#ID-transfer-demo-showSearch',
+                    id:'users',
+                    data: data,
+                    title: ['所有人员', '参与人'],
+                    showSearch: true
+                    });
+                });
+                                
+            
+            
+            }
+            if (rdata.g_command == "push_task") {
+                if (rdata.message == "success") {
+                    alert("创建成功");
+                    //跳转到 task_list.html
+                    window.location.href = '/res/task_list.html';
+                } else {
+                    alert("创建失败");
+            
+            }
+            
+            }
+            if (rdata.g_command == "get_sub_task"){
+              var data = rdata["data"][0];
+              var sub_task_name = data["sub_task_name"];
+              document.getElementById("sub_task_name").innerText = sub_task_name;
+
+
+              var sub_task_description = data["sub_task_description"];
+              var end_time = data["end_time"];
+              var created_at = data["created_at"];
+              var completion_rate = data["completion_rate"];
+              var state = data["state"];
+              var create_user_name = data["create_user_name"];
+              var sub_user_name = data["sub_user_name"];
+
+              var intask_info_t = '<div onclick="show_set_sub_progress();" ><span style="font-size: 14px; color: #000000;">\
+                [执行中] 完成度</span> <span class="layui-badge layui-bg-green">'+completion_rate+'%</span>\
+                <span style="font-size: 14px; color: #000000;">创建</span>\
+                <span class="layui-badge icnstyle1">'+create_user_name+'</span>\
+                <span style="font-size: 14px; color: #000000;">执行</span></span>\
+                <span class="layui-badge icnstyle1">'+sub_user_name+'</span> ';
+              var intask_info_d = '<span style="font-size: 12px; color: #999999;"> \
+                计划完成时间 '+end_time+' 开始时间 '+created_at+'</span> <span onclick="show_set_sub_progress();" class="layui-badge layui-bg-green">设置完成度</span>\
+                </div>';
+            
+              document.getElementById("intask_info_t").innerHTML = intask_info_t;
+              document.getElementById("intask_info_d").innerHTML = intask_info_d;
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+            
+            if (rdata.g_command == "get_sub_step_list") {
+              var data = rdata["data"]
+
+              var data_length = data.length;
+              var step_b ="";
+              for (var i = 0; i < data_length; i++) {
+                    step_b =step_b + ' <div class="card2" id = "gts'+data[i]['id']+'" >\
+                    <div class="layui-card-header">\
+                    <span class="layui-badge layui-bg-green">'+data[i]['completion_rate']+'%</span>\
+                    <span style="font-size: 16px; color: #000000;">'+data[i]['step_name']+'</span> <span style="font-size: 12px; color: #999999;"> '+data[i]['create_time']+'</span>\
+                    </div>\
+                    <div class="layui-card-body" id="progree_html_form'+data[i]['id']+'" style="display: none;">\
+                    </div>\
+                    <div class="layui-card-body" id="progree_html'+data[i]['id']+'"  onclick="get_usb_step('+data[i]['id']+');">';
+                var step_progress = data[i]['step_progress'];
+                var step_progress_length = step_progress.length;
+                for (var j = 0; j < step_progress_length; j++) {
+                  step_b += '<div style="background-color: rgb(252, 252, 252);" id="progree_in'+step_progress[j]['sp_id']+'" >'+step_progress[j]['sp_text']+' '+step_progress[j]['sp_time']+'\
+                  <span class="layui-badge icnstyle1">^'+step_progress[j]['progress']+'%</span>\
+                  <span style="text-align: right;font-size: 12px; color: #999999;">展开</span>\
+                  </div>';
+                }
+                if (step_progress_length==0){
+                  step_b += '<div style="background-color: rgb(252, 252, 252);" >\
+                  <span style="text-align: right;font-size: 12px; color: #999999;">还没有进度</span>\
+                  </div>';
+
+
+                }
+
+
+                step_b= step_b+ '</div></div>';
+                
+              }
+
+
+               
+              document.getElementById("step_b").innerHTML = step_b;
+
+
+
+
+
+
+            }
+            if (rdata.g_command == "get_sub_step") {
+              var data = rdata["data"][0];
+              var step_progress = data['step_progress'];
+                var step_progress_length = step_progress.length;
+                var step_b =""
+                var formvar = '\
+    <div class="layui-form-item">\
+        <input id="progress'+data['id']+'" type="number" min="0" max="100" step="1"   placeholder="完成度 %"  class="layui-input">\
+    </div>\
+    <div class="layui-form-item layui-form-text">\
+      <div class=".layui-input-block2">\
+        <textarea id ="sp_text'+data['id']+'" placeholder="请输入内容" name="step_readme"  class="layui-textarea"></textarea>\
+      </div>\
+    </div>\
+    <div class="layui-form-item">\
+      <button type="submit" class="layui-btn"  onclick="create_setp_progress('+data['id']+');"  >确认</button>\
+    </div>\
+    '
+                document.getElementById("progree_html_form"+data['id']).style.display = "block";            
+                document.getElementById("progree_html_form"+data['id']).innerHTML = formvar;
+                // 把progree_html_form"+data['id']设置为显示
+                
+
+                for (var j = 0; j < step_progress_length; j++) {
+                  step_b += '<div style="background-color: rgb(252, 252, 252);" id="progree_in'+step_progress[j]['sp_id']+'" >'+step_progress[j]['sp_text']+' '+step_progress[j]['sp_time']+'\
+                  <span class="layui-badge icnstyle1">^'+step_progress[j]['progress']+'%</span>\
+                  <span style="text-align: right;font-size: 12px; color: #999999;">展开</span>\
+                  </div>';
+                }
+                if (step_progress_length==0){
+                  step_b += '<div style="background-color: rgb(252, 252, 252);" >\
+                  <span style="text-align: right;font-size: 12px; color: #999999;">还没有进度</span>\
+                  </div>';
+
+
+                }
+
+                step_b += '<div style="background-color: rgb(252, 252, 252);" >'+data['step_readme']+'</div>';
+                document.getElementById("progree_html"+data['id']).innerHTML = step_b;
+              
+            }
+            if (rdata.g_command == "create_sub_step_progress") {
+              var task_id = GGet('task_id');
+              var sub_task_id = GGet('sub_task_id');
+              window.location.href="/res/task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
+            }
+            if (rdata.g_command == "create_task") {
+              var task_id = GGet('task_id');
+              window.location.href="/res/task_sub.html?task_id="+task_id;
+            }
+            if (rdata.g_command == "create_sub_step"){
+              var task_id = GGet('task_id');
+              var sub_task_id = GGet('sub_task_id');
+              window.location.href="/res/task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
+            }
+            if (rdata.g_command == "set_sub_progress"){
+              var task_id = GGet('task_id');
+              var sub_task_id = GGet('sub_task_id');
+              window.location.href="/res/task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
+            }
+
+          })
+          .catch(function(error) {
+              console.log(error);
+          });
+  }
+
+
+
+
+</script>
+
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<!--body 白色背景 -->
+<body style="background-color: #ffffff;">
+    <div class="rltb10">
+    <blockquote id ="sub_task_name"  class="layui-elem-quote" style="font-size: 20px;" >这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
+
+
+
+
+    <div id="sub_progress"  style="display: none;">      
+      <div  class="layui-form-item" >
+          <input id="progressnum" type="number" min="0" max="100" step="1"   placeholder="子任务总完成度 %"  class="layui-input">
+      </div>
+      <div class="layui-form-item">
+        <button type="submit" class="layui-btn"  onclick="set_setp_progress();"  >确认</button>
+      </div>
+                  </div>
+      <script>
+        function show_set_sub_progress(){
+          document.getElementById("sub_progress").style.display = "block";
+        }
+        function set_setp_progress(){
+          var progressnum = document.getElementById("progressnum").value;
+          var sub_task_id = GGet('sub_task_id');
+          var task_id = GGet('task_id');
+          sendJson({'g_command': 'set_sub_progress','task_id':task_id,"progress":progressnum,'sub_task_id':sub_task_id}); 
+        }
+  
+  
+      </script>
+    </div>
+
+      <div class="rltb10">
+        <div class="card2" style=" background-color: #fafafb;">
+        <div class="layui-card-header" id="intask_info_t">
+                </div>
+
+
+
+
+
+    
+
+
+
+
+
+        
+
+        <div class="layui-card-body" id="intask_info_d">
+        </div>
+      </div>
+      </div>
+
+
+      <div class="rltb10" id="step_b">
+
+      </div>
+
+      
+
+
+      <div style="width: 370px; margin: 0;margin: auto;">
+        <button type="button" id="scs_button" class="layui-btn layui-btn-fluid" onclick="on_show_create_step()" >创造步骤</button>
+      </div>
+
+    </div>
+
+    <div class="rltb10">
+    <form id="step_form" class="layui-form layui-form-pane" style="display: none;"  >
+      <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">  
+          <input  name="step_name"  placeholder="输入标题" lay-verify="required" class="layui-input">
+      </div>
+      </div>   
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+          <textarea placeholder="请输入内容" name="step_readme"  class="layui-textarea"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <button type="submit" class="layui-btn"   >确认</button>
+        <button type="reset" class="layui-btn layui-btn-primary" onclick="off_show_execution_form();">取消</button>
+      </div>
+    </form>
+    </div>
+  
+
+
+
+
+
+    <button id="setid_123" type="button" class="layui-btn layui-btn-primary" lay-on="test-alert-btn">自定义按钮</button>
+    
+
+</body>
+</html>
+
+<script>
+  window.mvar={};
+
+  var layer = layui.layer;
+  var util = layui.util;
+  util.on('lay-on', {
+    "test-alert-btn": function(e){
+      layer.alert('自定义按钮', {
+        btn: ['按钮一', '按钮二', '按钮三'],
+        btnAlign: 'c', // 按钮居中显示
+        btn1: function(){
+          layer.msg('按钮一的回调');
+        },
+        btn2: function(){
+          layer.msg('按钮二的回调');
+        },
+        btn3: function(){
+          layer.msg('按钮三的回调');
+        }
+      });
+    }
+   
+    });
+
+
+
+
+
+
+
+    function GGet(key){
+      var searchParams = new URLSearchParams(window.location.search);
+      var parameterValue = searchParams.get(key);
+      return parameterValue;
+    }
+
+    document.getElementById('step_form').addEventListener('submit', function(event) {
+      event.preventDefault(); // 阻止表单默认提交行为
+      var task_id = GGet('task_id');
+      var sub_task_id = GGet('sub_task_id');
+      var senddata={};
+      senddata['g_command']='create_sub_step';
+      senddata['task_id']=task_id;
+      senddata['sub_task_id']=sub_task_id;
+      var step_name = document.getElementsByName("step_name")[0].value;
+      var step_readme = document.getElementsByName("step_readme")[0].value;
+      senddata['step_name']=step_name;
+      senddata['step_readme']=step_readme;
+      sendJson({'g_command': 'create_sub_step','data':senddata}); 
+    }, false);
+
+    
+    layui.use(function(){
+    
+    
+    var task_id = GGet('task_id');
+    var sub_task_id = GGet('sub_task_id');
+    sendJson({'g_command': 'get_sub_task','task_id':task_id,'sub_task_id':sub_task_id}); 
+
+    setTimeout(function(){
+        sendJson({'g_command': 'get_sub_step_list', 'sub_task_id': sub_task_id,'type':1});
+    },350);
+
+
+
+    });
+
+    function on_show_create_step(){
+        document.getElementById("step_form").style.display="block";
+        document.getElementById("scs_button").style.display="none";
+    }
+    function off_show_execution_form(){
+        document.getElementById("step_form").style.display="none";
+        document.getElementById("scs_button").style.display="block";
+    }
+
+    function show_step_progress(pr_id){
+      {
+      var pr_form ='<form id="pr_form" class="layui-form layui-form-pane" style="display: none;"  >\
+            <div class="layui-form-item">\
+              <label class="layui-form-label">进度</label>\
+              <div class="layui-input-block">\
+                <input type="number" min="0" max="100" step="1"  name="progress"  placeholder="总的完成度 %" lay-verify="required" class="layui-input">\
+            </div>\
+            </div>\
+            <div class="layui-form-item layui-form-text">\
+              <label class="layui-form-label">描述</label>\
+              <div class="layui-input-block">\
+                <textarea placeholder="请输入内容" name="sp_text"  class="layui-textarea"></textarea>\
+              </div>\
+            </div>\
+            <div class="layui-form-item">\
+              <button type="submit" class="layui-btn"  onclick="pr_form_click();" >确认</button>\
+              <button type="reset" class="layui-btn layui-btn-primary" onclick="off_show_execution_form();">取消</button>\
+            </div>\
+          </form>';
+      }
+
+      // 替换字符串pr_form中的progress 为 progress+pr_id
+      var pr_form = pr_form.replace(/progress/g, "progress"+pr_id);
+      // 替换字符串pr_form中的sp_text 为 sp_text+pr_id
+      var pr_form = pr_form.replace(/sp_text/g, "sp_text"+pr_id);
+
+
+      
+
+
+
+    }
+
+    function get_usb_step(step_id){
+      sendJson({'g_command': 'get_sub_step','step_id':step_id}); 
+    };
+    
+    function get_usb_step_list(sub_task_id){
+      var progress = document.getElementsByName("progress"+sub_task_id)[0].value;
+      var sp_text = document.getElementsByName("sp_text"+sub_task_id)[0].value;
+      sendJson({'g_command': 'get_sub_step_list', 'sub_task_id': sub_task_id,'type':1,'progress':progress,'sp_text':sp_text});
+    };
+    function create_setp_progress(step_id){
+      var progress = document.getElementById("progress"+step_id).value;
+      var sp_text = document.getElementById("sp_text"+step_id).value;
+      sendJson({'g_command': 'create_sub_step_progress', 'step_id': step_id,'progress':progress,'sp_text':sp_text});
+    };
+
+
+</script>

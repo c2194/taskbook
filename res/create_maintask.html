@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+  <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
+ 
+</head>
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<script>
+  function sendJson(data) {
+      axios.post('/endpoint', data)
+          .then(function(response) {
+            var rdata = response.data;
+            // [{'tc_id': 1, 'tc_name': '单次任务', 'tc_feature': 1}, {'tc_id': 2, 'tc_name': '长期日报任务', 'tc_feature': 2}]
+
+            // 判断response.g_command 是否为 "task_types"
+            if (rdata.g_command == "task_types") {
+                // 1. 查找 名字为 task_type 的select
+                //var select = document.getElementById("task_type1");
+                //var select = document.getElementById("task_type");
+                //select.options.length = 0;
+                // 2. 重新添加option
+                //for (var i = 0; i < rdata.data.length; i++) {
+                  //  var option = document.createElement("option");
+                  //  option.value = rdata.data[i].tc_id;
+                  //  option.text = rdata.data[i].tc_name;
+                   // select.add(option);
+                //}
+
+                
+            
+            
+            }
+            if (rdata.g_command == "get_users") {
+
+                layui.use(function(){
+                var transfer = layui.transfer;
+                // 数据
+                var data = rdata.data;
+                // 渲染
+                transfer.render({
+                    elem: '#ID-transfer-demo-showSearch',
+                    id:'users',
+                    data: data,
+                    title: ['所有人员', '参与人'],
+                    showSearch: true
+                    });
+                });
+                                
+            
+            
+            }
+            if (rdata.g_command == "push_task") {
+                if (rdata.message == "success") {
+                    alert("创建成功");
+                    //跳转到 task_list.html
+                    window.location.href = '/res/task_list.html';
+                } else {
+                    alert("创建失败");
+            
+            }
+            
+            }
+
+
+             
+          })
+          .catch(function(error) {
+              console.log(error);
+          });
+  }
+  function onbuttonclick(infomess) {
+
+    if (infomess == "create_task") {
+        var inHTML=""
+        var mainbox = document.getElementById("mainbox");
+        //读取 /html?act=create_maintask.html
+        axios.get('/html?act=t1.html')
+          .then(function(response) {
+            inHTML = response.data;
+            mainbox.innerHTML = inHTML;
+
+          })
+          .catch(function(error) {
+              console.log(error);
+          });
+        
+
+
+
+    }
+  }
+
+
+
+</script>
+
+<!--body 白色背景 -->
+<body style="background-color: #ffffff;">
+
+
+
+<!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
+<!-- 创建一个div 宽高100% 里面的内容 左右边距为 10 -->
+<div style="width: 100%;height: 100%;padding: 15px;">
+
+
+
+
+<form class="layui-form layui-form-pane" action="">
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">任务名称</label>
+    <div class="layui-input-block">
+      <input type="text" name="task_name" autocomplete="off" placeholder="请输入" lay-verify="required" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">任务类型</label>
+ 
+    <div class="layui-input-block">
+        <input type="radio" name="rw" value="1" lay-filter="demo-radio-filter" title="限时类  有完成时间计划的任务"><br>
+        <input type="radio" name="rw" value="2" lay-filter="demo-radio-filter" title="每日类 每日需进行的任务"><br> 
+        <input type="radio" checked name="rw"  value="3" lay-filter="demo-radio-filter" title="快报任务 临时快报已完成的工作"> 
+      </div>
+    
+  </div>
+    <div class="layui-form-item" id="end_time">
+
+        <label class="layui-form-label">完成时间</label>
+        <div class="layui-input-inline">
+          <input type="text" class="layui-input" name="endtime"  id="ID-laydate-type-datetime-1" placeholder="yyyy-MM-dd HH:mm:ss">
+        </div>
+      
+    </div>
+    
+      <div class="layui-form-item" id="user_list" >
+        <label class="layui-form-label">参与人</label>
+        <div class="layui-input-block">
+          <div id="ID-transfer-demo-showSearch" style="min-height: 400px;"></div>
+        </div>
+      </div>
+   
+
+    
+
+  <div class="layui-form-item">
+    </div>
+  <div class="layui-form-item" id="task_sw" pane>
+    <label class="layui-form-label">开启任务</label>
+    <div class="layui-input-block">
+      <input type="checkbox" checked name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
+    </div>
+  </div>
+
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">任务描述</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入内容" name="readme"  class="layui-textarea"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <button class="layui-btn" lay-submit lay-filter="demo2">确认</button>
+    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+  </div>
+</form>
+  </div>
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+<script>
+layui.use(function(){
+  var laydate = layui.laydate;
+  // 年选择器
+  laydate.render({
+    elem: '#ID-laydate-type-year',
+    type: 'year'
+  });
+  
+  // 年月选择器
+  laydate.render({
+    elem: '#ID-laydate-type-month',
+    type: 'month'
+  });
+  
+  // 时间选择器
+  laydate.render({
+    elem: '#ID-laydate-type-time',
+    type: 'time'
+  });
+  
+  // 日期时间选择器
+  laydate.render({
+    elem: '#ID-laydate-type-datetime',
+    type: 'datetime'
+  });
+  // 日期时间选择器 - 日期和时间选择器同时显示（全面板）
+  laydate.render({
+    elem: '#ID-laydate-type-datetime-1',
+    type: 'datetime',
+    fullPanel: true // 2.8+
+  });
+});
+</script>
+
+
+
+<script>
+  var laydate = layui.laydate;
+  function  format_time_now(){
+          var currentDate = new Date();
+      // 获取年、月、日、小时、分钟和秒
+      var year = currentDate.getFullYear();
+      var month = String(currentDate.getMonth() + 1).padStart(2, '0');
+      var day = String(currentDate.getDate()).padStart(2, '0');
+      var hours = "23";
+      var minutes = "59";
+      var seconds = "59";
+
+      // 格式化日期时间字符串
+      var formattedDateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+      return formattedDateTime;
+
+   }
+  layui.use(['form'], function(){
+  var form = layui.form;
+  var layer = layui.layer;
+  var transfer = layui.transfer;
+  var pushadd=0;
+  function pu0() {
+    pushadd = 0;
+  }
+  // 提交事件
+  form.on('submit(demo2)', function(data){
+    var field = data.field; // 获取表单字段值
+    // 显示填写结果，仅作演示用
+    var getData = transfer.getData('users');
+    field['users'] = getData;
+
+
+        if (field['endtime'] == '') {
+      field['endtime'] = format_time_now();
+
+         };
+    data = {'g_command': 'push_task', 'data': field};
+    if (pushadd == 0) {
+      pushadd = 1;
+      sendJson(data);
+    }
+
+
+    //layer.alert(JSON.stringify(field), {
+      //title: '当前填写的字段值'
+    //});
+    // 此处可执行 Ajax 等操作
+    // …
+    //非阻塞方式 3秒后执行pushadd=0
+    setTimeout(pu0, 3000);
+
+    
+
+
+    return false; // 阻止默认 form 跳转
+  });
+});
+
+  function select1(){
+    document.getElementById("task_sw").style.display="block";
+    document.getElementById("user_list").style.display="block";
+    document.getElementById("end_time").style.display="block";
+  }
+
+  function select2(){
+    document.getElementById("task_sw").style.display="block";
+    document.getElementById("user_list").style.display="block";
+    document.getElementById("end_time").style.display="none";
+  }
+  function select3(){
+    document.getElementById("task_sw").style.display="none";
+    document.getElementById("user_list").style.display="none";
+    document.getElementById("end_time").style.display="none";
+  }
+
+
+  var form = layui.form;
+  var layer = layui.layer;
+  // radio 事件
+  form.on('radio(demo-radio-filter)', function(data){
+    var elem = data.elem; // 获得 radio 原始 DOM 对象
+    var checked = elem.checked; // 获得 radio 选中状态
+    var value = elem.value; // 获得 radio 值
+    var othis = data.othis; // 获得 radio 元素被替换后的 jQuery 对象
+    if (value==1){
+      select1();
+    }
+    if (value==2){
+      select2();
+    }
+    if (value==3){
+      select3();
+    }
+
+  });
+
+  select3();
+
+</script>
+
+<script>
+  layui.use(function(){
+
+    sendJson({'g_command': 'get_users'}); 
+    sendJson({'g_command': 'task_types'}); 
+
+
+  });
+  </script>
+
+
+
+<style id="LAY_layadmin_theme">.layui-side-menu,.layui-layer-admin .layui-layer-title,.layadmin-side-shrink .layui-side-menu .layui-nav>.layui-nav-item>.layui-nav-child{background-color:#20222A !important;}.layadmin-pagetabs .layui-tab-title li:after,.layadmin-pagetabs .layui-tab-title li.layui-this:after,.layui-nav-tree .layui-this,.layui-nav-tree .layui-this>a,.layui-nav-tree .layui-nav-child dd.layui-this,.layui-nav-tree .layui-nav-child dd.layui-this a,.layui-nav-tree .layui-nav-bar{background-color:#16baaa !important;}.layadmin-pagetabs .layui-tab-title li:hover,.layadmin-pagetabs .layui-tab-title li.layui-this{color: #16baaa !important;}.layui-layout-admin .layui-logo{background-color:#20222A !important;}</style>
+</body>
+</html>

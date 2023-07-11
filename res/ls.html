@@ -1,0 +1,32 @@
+<div class="card2">
+    <div class="layui-card-header">
+        <span class="layui-badge layui-bg-green">20%</span>
+         <span style="font-size: 16px; color: #000000;">步骤规划</span><span class="layui-badge icnstyle1">柏青松</span> <span style="font-size: 12px; color: #999999;"> 2019-12-12 12:12:12</span>
+    </div>
+    <div class="layui-card-body">
+        <div style="background-color: rgb(252, 252, 252);" >绘制了pcb原理图，提交给嘉立创打板 12-12 12:12 <span class="layui-badge icnstyle1">^8%</span>
+            <span style="text-align: right;font-size: 12px; color: #999999;">展开</span>
+        
+        </div>
+        <div style="background-color: rgb(249, 249, 249);margin-top: 10px;" >留言：板子画的是不是有点小了，建议修改从新发版 12-12 12:12 <span class="layui-badge icnstyle1">李铭中</span>
+            <span style="text-align: right;font-size: 12px; color: #999999;">展开</span>
+        
+        </div>
+
+    </div>
+  </div>
+
+
+  var formvar = '<form id="iform" class="layui-form layui-form-pane" action="" >\
+    <div class="layui-form-item">\
+        <input id="progress'+data['id']+'" type="number" min="0" max="100" step="1"   placeholder="完成度 %"  class="layui-input">\
+    </div>\
+    <div class="layui-form-item layui-form-text">\
+      <div class=".layui-input-block2">\
+        <textarea id ="sp_text'+data['id']+'" placeholder="请输入内容" name="step_readme"  class="layui-textarea"></textarea>\
+      </div>\
+    </div>\
+    <div class="layui-form-item">\
+      <button type="submit" class="layui-btn"  onclick="create_setp_progress('+data['id']+');"  >确认</button>\
+    </div></form>\
+    '
