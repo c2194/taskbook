@@ -155,6 +155,13 @@ legend {
 
 <script>
     var task=0;
+    window.user_id=0;
+    window.user_chinese_name="";
+    window.task=0;
+    window.sub_task=0;
+    window.task_create_id=0;
+    window.sub_create="";
+    window.task_class=0;
     
     function precent_mk(precent){
         var precent = precent;
@@ -217,12 +224,16 @@ legend {
             
             }
             if (rdata.g_command == "get_task") {
-                    layui.use(function(){
+                
+                window.user_id=rdata.user_id;
+                window.task_class =rdata["data"].task_class;
+                layui.use(function(){
                     var transfer = layui.transfer;
                     // 数据
                     var data = rdata.data;
                     document.getElementById("f_task_name").innerText=data.task_name;
                     document.getElementById("progree").innerText=data.progree+"%";
+                    window.task_create_id=data.creator;
                     // 把字符串转成对象
                     
                     var users = data.participant;
@@ -238,8 +249,22 @@ legend {
                     document.getElementById("chinese_name").innerText="创建人:"+data.chinese_name;
                     document.getElementById("creation_time").innerText="创建时间:"+data.creation_time;
                     document.getElementById("plan_time").innerText="完成时间:"+data.plan_time;
-
+                    document.getElementById("task_readme").innerHTML = data.task_readme;
                     
+                    // 任务状态
+                    var task_state = "";
+                    if (data.task_status == 1){
+                        task_state = '<span class="layui-badge layui-bg-green">进行中</span>';
+                    }else if (data.task_status == 2){
+                        task_state = '<span class="layui-badge layui-bg-green">已完成</span>';
+                    }else if (data.task_status == 3){
+                        task_state = '<span class="layui-badge layui-bg-green">暂停</span>';
+                    }else if (data.task_status == 4){
+                        task_state = '<span class="layui-badge layui-bg-green">取消</span>';
+                    }
+
+
+                    document.getElementById("task_state").innerHTML = task_state;
                     console.log(users);
 
 
@@ -297,7 +322,7 @@ legend {
                 for (var i = 0; i < data_length; i++) {
                   discussions = discussions + '<div class="tl2"><span class="layui-badge layui-bg-green">\
                             '+data[i]['speak_time']+'</span><span class="layui-badge layui-bg-green"\
-                            >'+data[i]['chinese_name']+'%</span> '+data[i]['text']+'</div>';
+                            >'+data[i]['chinese_name']+'</span> '+data[i]['text']+'</div>';
                 }
                 document.getElementById("disf").innerHTML=discussions;
 
@@ -314,9 +339,24 @@ legend {
                 var data_length = data.length;
                 var execution = "";
                 for (var i = 0; i < data_length; i++) {
+                  var opacity = 1;
+                  if (data[i]['state'] != 1){
+                    opacity = 0.3;
+                    
+                  }
+                  var sub_state = ""; //1 #f8f8f8 2 #eeffec 3 #dcdcdc 4 #fafbe4
+                  if (data[i]['state'] == 1){
+                    sub_state = "opacity: 1; background-color: #f8f8f8;";
+                  }else if (data[i]['state'] == 2){
+                    sub_state = "opacity: 1; background-color: #eeffec;";
+                  }else if (data[i]['state'] == 3){
+                    sub_state = "opacity: 1; background-color: #fafbe4;";
+                  }else if (data[i]['state'] == 4){
+                    sub_state = "opacity: 1; background-color: #dcdcdc;";
+                  }
 
                 
-                execution += '<div onclick="tosubtask('+data[i]['id']+')" class="layui-card"   style="background-color: #eaeaea;"><div class="layui-card-header2">\
+                execution += '<div style="'+sub_state+'"  onclick="tosubtask('+data[i]['id']+')" class="layui-card"   style="background-color: #eaeaea;"><div class="layui-card-header2">\
                 <span class="layui-badge layui-bg-green">'+data[i]["completion_rate"]+'%</span>\
                 <span style="font-size: 16px; color: #000000;">'+data[i]['sub_task_name'] +'</span>\
                 <span class="layui-badge icnstyle1">'+data[i]['sub_user_name']+'</span> <span style="font-size: 12px; color: #999999;"> \
@@ -411,7 +451,36 @@ layui.use(function(){
 
 <!--body 白色背景 -->
 <body style="background-color: #ffffff;">
-    <div class="rltb10">
+  <div style="height: 10px; left:5px; ">
+    <ul class="layui-nav"  >
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+      </li>
+
+    </ul>
+    <script>
+    function onc_menu(cl){
+      //  输出字符串 cl
+      window.location.href = "/res/"+cl;
+    }
+  </script>
+  </div>
+
+  
+  
+  <div class="rltb10">
     <blockquote class="layui-elem-quote" id="f_task_name"  >这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
     </div>
 
@@ -419,7 +488,7 @@ layui.use(function(){
 
     
 
-    <div class="layui-panel rltb10 tl2">
+    <div  class="layui-panel rltb10 tl2">
         <table><tr><td>    <ul class="layui-border-box site-doc-icon site-doc-anim">
             <li>
               <div class="layui-anim layui-anim-down" id = "progree">000%</div>
@@ -430,7 +499,7 @@ layui.use(function(){
       </div>   
     <div class="rltb10">
         <div class="card2 in10 " > 
-            <span class="" id="chinese_name" >创建人：白寝室</span> <span class="" id = "creation_time">创建时间：</span> <span class="" id="plan_time">计划完成时间：白寝室</span>
+            <span id="task_state" > </span></span><span class="" id="chinese_name" >创建人：白寝室</span> <span class="" id = "creation_time">创建时间：</span> <span class="" id="plan_time">计划完成时间：白寝室</span>
         </div>
 
           
@@ -515,9 +584,10 @@ layui.use(function(){
             <div class="layui-form-item">
                 <label class="layui-form-label">开发情形</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="state" value="1" title="正常进行">
-                    <input type="radio" name="state" value="2" title="进度受阻">
-                    <input type="radio" name="state" value="2" title="全部完成">
+                    <input type="radio" name="state" value="1" title="进行">
+                    <input type="radio" name="state" value="2" title="完成">
+                    <input type="radio" name="state" value="3" title="暂停">
+                    <input type="radio" name="state" value="4" title="取消">
                 </div>
               </div>
 
@@ -562,7 +632,7 @@ layui.use(function(){
               </div>
             </div>
             <div class="layui-form-item">
-              <button  class="layui-btn"  onclick="ondiscussions();" >确认</button>
+              <button  class="layui-btn"  onclick="ondiscussions();" >确认</button>        
               <button type="reset" class="layui-btn layui-btn-primary" onclick="off_show_execution_form();">清除</button>
             </div>
           </form>
@@ -570,6 +640,20 @@ layui.use(function(){
 
 
     </div>
+    <div class="site-title rltb10">
+      <form id="form_task_readme" class="layui-form layui-form-pane"   >
+          
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label" onclick="show_task_readme()" >任务说明  [点此显示]</label>
+          <div class="layui-input-block" id ="task_readme" style="display: none;" >
+          </div>
+        </div>
+        <div class="layui-form-item">
+        </div>
+      </form>
+
+    </div>
+
 
     
 
@@ -595,6 +679,11 @@ layui.use(function(){
 
 
             }, false);
+
+    function show_task_readme(){
+      var task_readme = document.getElementById("task_readme");
+      task_readme.style.display = "block";
+    }
 
     function getQueryParams() {  
     var queryParams = {};  
@@ -633,10 +722,15 @@ layui.use(function(){
 
     function onshow_create_subtask(){
         //iform display 显示
-        var iform = document.getElementById("iform");
-        iform.style.display = "block";
-        document.getElementById("button_cst").style.display = "none";
-        sendJson({'g_command': 'get_users'}); 
+        if (window.user_id == window.task_create_id){
+          var iform = document.getElementById("iform");
+          iform.style.display = "block";
+          document.getElementById("button_cst").style.display = "none";
+          sendJson({'g_command': 'get_users'}); 
+        }else{
+          layer.msg('你不是任务创建者，无法创建子任务');
+        }
+
     }
 
 
@@ -648,14 +742,29 @@ layui.use(function(){
         // task_id 转为 int
         task_id = parseInt(task_id);
 
-
+        senddata["task_class"] = window.task_class;
         senddata["task_id"] = task_id;
         senddata["sub_task_name"] = document.getElementsByName("sub_task_name")[0].value;
         senddata["end_time"] = document.getElementsByName("end_time")[0].value;
+        
+        //判读senddata["end_time"] 是否为空
+        if (senddata["end_time"] == ""){
+            layer.msg('请选择截止时间');
+            return;
+        }
+        
         var transfer = layui.transfer;
         
         var getData = transfer.getData('users');
+        
+        //获取  getDate 的长度
+        var len = getData.length;
+        if (len == 0){
+            layer.msg('请选择子任务执行者');
+            return;
+        }
         var sub_user = getData[0]['value']
+        
         senddata['sub_user'] = sub_user;
         senddata['sub_task_description'] = document.getElementsByName("sub_task_description")[0].value;
 
@@ -677,9 +786,15 @@ layui.use(function(){
     }
     function on_show_execution_form(){
         //iform display 显示
-        var iform = document.getElementById("tec");
+
+
+        if (window.user_id == window.task_create_id){
+          var iform = document.getElementById("tec");
         iform.style.display = "block";
         document.getElementById("button_tec").style.display = "none";
+        }else{
+          layer.msg('你不是任务创建者，无法更新状态');
+        }
     }
     function off_show_execution_form(){
         //iform display 显示
@@ -693,12 +808,21 @@ layui.use(function(){
 
         var senddata={};
         senddata["completion_rate"] = document.getElementsByName("completion_rate")[0].value;
-        var state = document.getElementsByName("state")[0].ariaChecked;
-        if(state == "true"){
-            senddata["state"] = 2;
-        }else{
-            senddata["state"] = 3;
+        var state =0;
+        if (document.getElementsByName("state")[0].checked){
+            state = document.getElementsByName("state")[0].value;
+        }else if (document.getElementsByName("state")[1].checked){
+            state = document.getElementsByName("state")[1].value;
+        }else if (document.getElementsByName("state")[2].checked){
+            state = document.getElementsByName("state")[2].value;
+        }else if (document.getElementsByName("state")[3].checked){  
+            state = document.getElementsByName("state")[3].value;
         }
+        senddata["state"] = state;
+
+
+
+
         senddata["completion_description"] = document.getElementsByName("completion_description")[0].value;
         senddata["task_id"] = task_id;
         senddata["sub_task_id"] = 0;

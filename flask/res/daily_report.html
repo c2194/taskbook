@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <style>
+    .layui-btn-group {
+      display: flex;
+      font-size: 0;
+    }
+
+    .idiv {
+      margin-bottom: 10px;
+      padding: 8px;
+      line-height: 1.8;
+      border-left: 5px solid #16b777;
+      border-radius: 0 2px 2px 0;
+      background-color: #fafafa;
+    }
+
+    .idiv:hover {
+      background-color: #e7eee2;
+    }
+
+    .idiv span {
+      margin-left: 10px;
+    }
+
+    .layui-badge {
+      height: 18px;
+      line-height: 18px;
+    }
+
+    .layui-badge,
+    .layui-badge-dot,
+    .layui-badge-rim {
+      position: relative;
+      display: inline-block;
+      padding: 0 6px;
+      font-size: 12px;
+      text-align: center;
+      background-color: #ff5722;
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    .layui-bg-green {
+      background-color: #16baaa !important;
+      color: #fff !important;
+    }
+
+    .layui-badge-rim {
+      height: 18px;
+      line-height: 18px;
+      border-width: 1px;
+      border-style: solid;
+      background-color: #fff;
+      color: #5f5f5f;
+    }
+
+    .layui-badge-dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    .layui-bg-green {
+      background-color: #16baaa !important;
+      color: #fff !important;
+    }
+
+    /* 里面的内容  距离 左右 都是 20px 顶部  20px */
+    .iin20 {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    /* 里面的内容  距离 左右 都是 20px 距离顶部20px */
+    .iin20t {
+      width: 100%;
+      margin: 20px auto 0;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      /* 假设容器高度为视口高度 */
+      background-color: #f1f1f1;
+    }
+
+    .rltb10 {
+      margin-right: 10px;
+      margin-left: 10px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .width35 {
+      width: 50%;
+    }
+  </style>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+  <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
+
+</head>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script>
+
+
+<script>
+  window.me_p = 0; //是否值显示我的部门 
+  function retask_html(task_name, user_name, precen, dot, task_id, task_class) {
+
+    var strhtml1 = '<div class="idiv">\
+    <div  onclick="window.location.href=\'task.html?task='+ task_id + '\'" > icon_html task_name <span class="layui-badge layui-bg-green">user_name</span>\
+    <span class="layui-badge-rim">precen</span>dot</div></div>';
+
+    var time_html_ed = '';
+
+
+    // 把字符串中的 task_name 替换成 task_name 的值 
+    // 把字符串中的 user_name 替换成 user_name 的值
+    // 把字符串中的 precen 替换成 precen 的值
+    strhtml1 = strhtml1.replace("task_name", task_name);
+    strhtml1 = strhtml1.replace("user_name", user_name);
+
+    if (task_class == 1) {
+      strhtml1 = strhtml1.replace("precen", precen + "%");
+      icon_html = '<i class="layui-icon layui-icon-find-fill"></i>';
+    } else if (task_class == 2) {
+      strhtml1 = strhtml1.replace("precen", "☀");
+      icon_html = '<i class="layui-icon layui-icon-menu-fill"></i>';
+    } else if (task_class == 3) {
+      strhtml1 = strhtml1.replace("precen", "✔");
+      icon_html = '<i class="layui-icon layui-icon-tree"></i>';
+    } else if (task_class == 4) {
+
+      strhtml1 = strhtml1.replace("precen", "..");
+      icon_html = '<i class="layui-icon layui-icon-group"></i>';
+
+    }
+
+
+    if (dot == 1) {
+      strhtml1 = strhtml1.replace("dot", '<span class="layui-badge-dot layui-bg-green"></span>');
+    } else {
+      strhtml1 = strhtml1.replace("dot", '');
+    }
+
+
+    strhtml1 = strhtml1.replace("icon_html", icon_html);
+
+
+
+
+    //返回
+    return strhtml1;
+  }
+
+  function sendJson(data) {
+    axios.post('/endpoint', data)
+      .then(function (response) {
+        var rdata = response.data;
+        // [{'tc_id': 1, 'tc_name': '单次任务', 'tc_feature': 1}, {'tc_id': 2, 'tc_name': '长期日报任务', 'tc_feature': 2}]
+
+        // 判断response.g_command 是否为 "task_types"
+        if (rdata.g_command == "get_tasks") {
+          var container = document.getElementById("container");
+          var count = 1;
+          var update = "";
+          var outhtml = "";
+          var first = 1;
+          // 2. 重新添加option
+          for (var i = 0; i < rdata.data.length; i++) {
+
+            var task_name = rdata.data[i].task_name;
+            var user_name = rdata.data[i].user_name;
+            var precen = rdata.data[i].progree;
+            var creation_time = rdata.data[i].creation_time;
+            var chinese_name = rdata.data[i].chinese_name;
+            var task_class = rdata.data[i].task_class;
+            var task_id = rdata.data[i].task_id;
+            var plan_time = rdata.data[i].plan_time;
+            var task_status = rdata.data[i].task_status;
+            //把2023-07-01 00:00:00 格式的字符串，转换成 07-01\
+            //var creation_time = creation_time.substr(5, 5);
+            var plan_time = plan_time.substr(5, 5);
+            var dot = 0;
+            var time_html = "";
+            var time_html_st = '<div class="layui-timeline-content layui-text" onclick="window.location.href=\'task.html?task=\'' + task_id + '" > ';
+            var time_html_ed = "</div>";
+            var icon_html = "";
+
+
+
+            if (update != creation_time) {
+              if (first) {
+                first = 0;
+              } else {
+                outhtml += "</div></div>"
+              }
+              outhtml += '  <div class="layui-timeline-item">\
+                      <i class="layui-icon layui-timeline-axis"></i>\
+                      <div class="layui-timeline-content layui-text" style="font-size: 16px;">\
+                      <h3 class="layui-timeline-title">'+ creation_time + '</h3>';
+
+            } else {
+              // outhtml +="</div>"
+            }
+            var inhtml = retask_html(task_name, chinese_name, precen, dot, task_id, task_class);
+            outhtml += inhtml;
+            //container.innerHTML += inhtml;
+            update = creation_time;
+
+
+          }
+          outhtml += "</div></div>"
+          //输出outhtml
+          console.log(outhtml);
+
+
+
+
+          container.innerHTML = outhtml;
+
+
+
+
+
+        }
+
+        if (rdata.g_command == "get_run_tasks") {
+          var container = document.getElementById("container");
+          var count = 1;
+          var update = "";
+          var outhtml = "";
+          var first = 1;
+          // 2. 重新添加option
+          for (var i = 0; i < rdata.data.length; i++) {
+
+            var task_name = rdata.data[i].task_name;
+            var user_name = rdata.data[i].user_name;
+            var precen = rdata.data[i].progree;
+            var creation_time = rdata.data[i].creation_time;
+            var chinese_name = rdata.data[i].chinese_name;
+            var task_class = rdata.data[i].task_class;
+            var task_id = rdata.data[i].task_id;
+            var plan_time = rdata.data[i].plan_time;
+            var task_status = rdata.data[i].task_status;
+            //把2023-07-01 00:00:00 格式的字符串，转换成 07-01\
+            //var creation_time = creation_time.substr(5, 5);
+            var plan_time = plan_time.substr(5, 5);
+            var dot = 0;
+            var time_html = "";
+            var time_html_st = '<div class="layui-timeline-content layui-text" onclick="window.location.href=\'task.html?task=\'' + task_id + '" > ';
+            var time_html_ed = "</div>";
+            var icon_html = "";
+
+
+
+            if (update != creation_time) {
+              if (first) {
+                first = 0;
+              } else {
+                outhtml += "</div></div>"
+              }
+              outhtml += '  <div class="layui-timeline-item">\
+                      <i class="layui-icon layui-timeline-axis"></i>\
+                      <div class="layui-timeline-content layui-text" style="font-size: 16px;">\
+                      <h3 class="layui-timeline-title">'+ creation_time + '</h3>';
+
+            } else {
+              // outhtml +="</div>"
+            }
+            var inhtml = retask_html(task_name, chinese_name, precen, dot, task_id, task_class);
+            outhtml += inhtml;
+            //container.innerHTML += inhtml;
+            update = creation_time;
+
+
+          }
+          outhtml += "</div></div>"
+          //输出outhtml
+          console.log(outhtml);
+
+
+
+
+          container.innerHTML = outhtml;
+
+
+
+
+
+        }
+
+        if (rdata.g_command = "get_daily_report"){
+
+          document.getElementById("container").innerHTML = rdata.outstr;
+
+
+
+
+        }
+
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+</script>
+
+<body style="background-color: #ffffff;">
+  <div style="height: 10px; left:5px; ">
+    <ul class="layui-nav"  >
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+      </li>
+
+    </ul>
+    <script>
+    function onc_menu(cl){
+      //  输出字符串 cl
+      window.location.href = "/res/"+cl;
+    }
+  </script>
+  </div>
+
+
+<div class="container">
+
+
+
+<button type="button" class="layui-btn layui-btn-radius layui-btn-primary   ">设置</button>
+<button type="button" class="layui-btn layui-btn-radius">日报告</button>
+<button type="button" class="layui-btn layui-btn-primary layui-btn-radius">GPT格式</button>
+
+
+</div>
+
+
+
+
+<div class="layui-btn-group" style="display: flex;" >
+<button  type="button" class="layui-btn width35">日简报</button>
+<button type="button" class="layui-btn width35">日细则报告</button>
+<button type="button" class="layui-btn width35">部门日报</button>
+</div>      
+
+
+<div class="layui-timeline">
+  <div id="container"></div>
+</div>
+
+<div class=" rltb10 layui-btn-container" style="text-align: right;">
+  <button onclick="set_d(1)" id="me_p" type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+    
+  </button>
+
+  <button onclick="set_d(0) " id="all_p" type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+    
+  </button>
+  <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+    <i class="layui-icon layui-icon-left"></i>
+  </button>
+  <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+    <i class="layui-icon layui-icon-right"></i>
+  </button>
+
+
+</div>
+
+
+<script>
+
+  var the_function = get_run_tasks;
+
+  function set_d(val) {
+    window.me_p = val;
+    if (val == 1) {
+      document.getElementById("me_p").style = "background-color: #439580;color: #ffffff;"
+      document.getElementById("all_p").style = "background-color: #ffffff;color: #666666;"
+
+    } else {
+      document.getElementById("me_p").style = "background-color: #ffffff;color: #666666;"
+      document.getElementById("all_p").style = "background-color: #439580;color: #ffffff;"
+    }
+    the_function();
+  }
+  function get_run_tasks() {
+    the_function = get_run_tasks;
+    sendJson({ "g_command": "get_run_tasks", "department": window.me_p });
+  }
+  function get_tasks() {
+    the_function = get_tasks;
+    sendJson({ "g_command": "get_tasks", "department": window.me_p });
+  }
+
+  function get_daily_report() {
+    the_function = get_daily_report;
+    sendJson({ "g_command": "get_daily_report"});
+  }
+
+  set_d(0);//默认所有部门
+  get_daily_report();
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

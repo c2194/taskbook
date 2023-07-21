@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo</title>
+  <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
+ 
+  <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
+
+ 
+</head>
+<style>
+
+.span_button {
+    height: 28px;
+    line-height: 28px;
+    background-color: #16baaa!important;
+    color: #fff!important;
+    position: relative;
+    display: inline-block;
+    padding: 0 6px;
+    font-size: 12px;
+    text-align: center;
+    border-radius: 2px;
+}
+
+.layui-card-header2 {
+    position: relative;
+    /* height: 42px; */
+    /* line-height: 42px; */
+    padding: 5px 8px 7px 5px;
+    border-bottom: 1px solid #f8f8f8;
+    color: #333;
+    border-radius: 2px 2px 0 0;
+    font-size: 14px;
+}
+.large-checkbox {  
+  display: inline-block;  
+  width: 200px;  
+  height: 200px;  
+  border: 2px solid #ccc;  
+  border-radius: 5px;  
+  background-color: #fff;  
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);  
+  cursor: pointer;  
+}  
+  
+.large-checkbox:checked {  
+  border-color: #007bff;  
+  background-color: #e9ecef;  
+}
+fieldset {
+    border: none;
+    padding: 0;
+    border-top: 1px solid #eee;
+}
+user agent stylesheet
+fieldset {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 2px;
+    border-style: groove;
+    border-color: rgb(192, 192, 192);
+    border-image: initial;
+}
+fieldset legend {
+    margin-left: 20px;
+    padding: 0 10px;
+    font-size: 22px;
+    font-weight: 300;
+}
+user agent stylesheet
+legend {
+    display: block;
+    padding-inline-start: 2px;
+    padding-inline-end: 2px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}   
+.site-title {
+    margin: 30px 0 20px;
+}
+.tl2 {
+    padding-top: 8px;
+    padding-left: 9px;
+}
+
+.rltb20 {   
+  margin-left: 20px;  
+}
+
+.rltb10 {  
+    margin-right: 10px;  
+    margin-left: 10px;  
+    margin-top: 10px;  
+    margin-bottom: 10px;  
+
+
+}
+.in10 {  
+    padding-top: 8px;
+    padding-left: 9px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.circle1{
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto 10px;
+    text-align: center;
+    background-color: #009688;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 50%;
+}
+.site-doc-icon li .layui-anim {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 auto 10px;
+    text-align: center;
+    background-color: #009688;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 50%;
+}
+.icnstyle1 {  
+  background-color: #d0ddd0;  
+  color: black;  
+}
+
+.card2 {
+    margin-bottom: 15px;
+    border-radius: 2px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+}
+.fontsize0 {
+    /* display: inline-block; */
+    /* vertical-align: middle; */
+    font-size: 0;
+}
+.width35{
+  width: 50%;
+}
+.layui-btn-group {
+  display: flex;
+    font-size: 0;
+}
+
+
+
+</style>
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<script>
+    var task=0;
+    window.user_id=0;
+    window.user_chinese_name="";
+    window.task=0;
+    window.sub_task=0;
+    window.task_create_id=0;
+    window.sub_create="";
+    window.task_class=0;
+    
+    function precent_mk(precent){
+        var precent = precent;
+        var precent_mk = '<span class="layui-badge layui-bg-green">'+precent+'%</span>';
+        return precent_mk;
+    }
+
+  function sendJson(data) {
+      axios.post('/endpoint', data)
+          .then(function(response) {
+            var rdata = response.data;
+            // [{'tc_id': 1, 'tc_name': '单次任务', 'tc_feature': 1}, {'tc_id': 2, 'tc_name': '长期日报任务', 'tc_feature': 2}]
+
+            // 判断response.g_command 是否为 "task_types"
+            if (rdata.g_command == "get_my_sub_tasks"){
+              window.user_id = rdata.user_id;
+              window.user_chinese_name = rdata.chinese_name;
+              document.getElementById("chinese_name").innerHTML = rdata.chinese_name;
+
+
+              var data = rdata.data;
+              console.log(data);
+                var data_length = data.length;
+                var execution = "";
+                for (var i = 0; i < data_length; i++) {
+                  var strhtml1 = '';
+                  var icon_html ='';
+                  task_class = data[i]['sub_class'];
+                  if (task_class == 1) {
+                      strhtml1 = strhtml1.replace("precen", precen+"%");
+                      icon_html = '[计划]';
+                    } else if(task_class == 2) {
+                      strhtml1 = strhtml1.replace("precen", "☀");
+                      icon_html = '[每日]';
+                    } else if(task_class == 3) {
+                      strhtml1 = strhtml1.replace("precen", "✔");
+                      icon_html = '[即时]';
+                    }else if(task_class == 0) {
+                      strhtml1 = strhtml1.replace("precen", "✔");
+                      icon_html = '[调试]';
+                    };
+
+
+                    var status = "";
+
+                    if (data[i]['state'] == 1) {
+                      status = "▶";
+                    };
+                    if (data[i]['state'] == 2) {
+                      status = "★";
+                    };
+                    if (data[i]['state'] == 3) {
+                      status = "☽";
+                    };
+                    if (data[i]['state'] == 4) {
+                      status = "✘";
+                    };
+
+
+                
+                execution += '<div onclick="tosubtask('+data[i]['id']+','+data[i]['task_id']+')" class="layui-card"   style="background-color: #eaeaea;"><div class="layui-card-header2">\
+                <span class="layui-badge layui-bg-green">'+data[i]["completion_rate"]+'%</span>\
+                <span style="font-size: 16px; color: #000000;">'+data[i]['sub_task_name'] +'</span>\
+                <span class="layui-badge icnstyle1">'+status+'</span> <span class="layui-badge icnstyle1">'+data[i]['sub_user_name']+'</span> <span style="font-size: 12px; color: #999999;"> \
+                '+data[i]['created_at']+'到'+data[i]['end_time']+' '+icon_html+'</span></div></div>'
+                }
+                document.getElementById("sub_task_list").innerHTML=execution;
+                document.getElementById("sub_task_list_history").innerHTML="";
+                document.getElementById("history_list").style.display="none";
+
+
+            }
+            
+            if (rdata.g_command == "get_my_history"){
+              var data = rdata.data;
+              console.log(data);
+                var data_length = data.length;
+                var execution = "";
+                for (var i = 0; i < data_length; i++) {
+                  var strhtml1 = '';
+                  var icon_html ='';
+                  task_class = data[i]['sub_class'];
+                  if (task_class == 1) {
+                      strhtml1 = strhtml1.replace("precen", precen+"%");
+                      icon_html = '[计划]';
+                    } else if(task_class == 2) {
+                      strhtml1 = strhtml1.replace("precen", "☀");
+                      icon_html = '[每日]';
+                    } else if(task_class == 3) {
+                      strhtml1 = strhtml1.replace("precen", "✔");
+                      icon_html = '[即时]';
+                    }else if(task_class == 0) {
+                      strhtml1 = strhtml1.replace("precen", "✔");
+                      icon_html = '[调试]';
+                    };
+
+
+                    var status = "";
+
+                    if (data[i]['state'] == 1) {
+                      status = "▶";
+                    };
+                    if (data[i]['state'] == 2) {
+                      status = "★";
+                    };
+                    if (data[i]['state'] == 3) {
+                      status = "☽";
+                    };
+                    if (data[i]['state'] == 4) {
+                      status = "✘";
+                    };
+
+
+                
+                execution += '<div onclick="tosubtask('+data[i]['id']+')" class="layui-card"   style="background-color: #eaeaea;"><div class="layui-card-header2">\
+                <span class="layui-badge layui-bg-green">'+data[i]["completion_rate"]+'%</span>\
+                <span style="font-size: 16px; color: #000000;">'+data[i]['sub_task_name'] +'</span>\
+                <span class="layui-badge icnstyle1">'+status+'</span> <span class="layui-badge icnstyle1">'+data[i]['sub_user_name']+'</span> <span style="font-size: 12px; color: #999999;"> \
+                '+data[i]['created_at']+'到'+data[i]['end_time']+' '+icon_html+'</span></div></div>'
+                }
+                document.getElementById("sub_task_list").innerHTML=execution;
+                document.getElementById("sub_task_list_history").innerHTML="";
+                document.getElementById("history_list").style.display="none";
+            }
+
+            if (rdata.g_command == "get_my_tasks"){
+              var data = rdata.data;
+              console.log(data);
+                var data_length = data.length;
+                var execution = "";
+                for (var i = 0; i < data_length; i++) {
+
+                  var strhtml1 = '';
+                  var icon_html ='';
+                  task_class = data[i]['task_class'];
+                  if (task_class == 1) {
+                     
+                      icon_html = '[计划]';
+                    } else if(task_class == 2) {
+                      
+                      icon_html = '[每日]';
+                    } else if(task_class == 3) {
+                     
+                      icon_html = '[即时]';
+                    }else if(task_class == 0) {
+                     
+                      icon_html = '[调试]';
+                    };
+
+                    var status = "";
+
+                    if (data[i]['task_status'] == 1) {
+                      status = "▶";
+                    };
+                    if (data[i]['task_status'] == 2) {
+                      status = "★";
+                    };
+                    if (data[i]['task_status'] == 3) {
+                      status = "☽";
+                    };
+                    if (data[i]['task_status'] == 4) {
+                      status = "✘";
+                    };
+
+
+
+
+
+                  execution += '<div onclick="totask('+data[i]['task_id']+')" class="layui-card"   style="background-color: #eaeaea;"><div class="layui-card-header2">\
+                <span class="layui-badge layui-bg-green">'+data[i]["progree"]+'%</span>\
+                <span style="font-size: 16px; color: #000000;">'+data[i]['task_name'] +'</span>\
+                <span class="layui-badge icnstyle1">'+status+'</span> <span class="layui-badge icnstyle1">'+data[i]['creator_name']+'</span> <span style="font-size: 12px; color: #999999;"> \
+                '+data[i]['creation_time']+'到'+data[i]['plan_time']+' '+icon_html+'</span></div></div>'
+                }
+                document.getElementById("sub_task_list").innerHTML=execution;
+                document.getElementById("history_list").style.display="block";
+
+
+
+
+
+
+              var data = rdata.data2;
+              console.log(data);
+                var data_length = data.length;
+                var execution = "";
+                for (var i = 0; i < data_length; i++) {
+
+                  var strhtml1 = '';
+                  var icon_html ='';
+                  task_class = data[i]['task_class'];
+                  if (task_class == 1) {
+                     
+                      icon_html = '[计划]';
+                    } else if(task_class == 2) {
+                      
+                      icon_html = '[每日]';
+                    } else if(task_class == 3) {
+                     
+                      icon_html = '[即时]';
+                    }else if(task_class == 0) {
+                     
+                      icon_html = '[调试]';
+                    };
+
+                    var status = "";
+
+                    if (data[i]['task_status'] == 1) {
+                      status = "▶";
+                    };
+                    if (data[i]['task_status'] == 2) {
+                      status = "✔";
+                    };
+                    if (data[i]['task_status'] == 3) {
+                      status = "☽";
+                    };
+                    if (data[i]['task_status'] == 4) {
+                      status = "✘";
+                    };
+
+
+
+
+
+
+                  execution += '<div onclick="totask('+data[i]['task_id']+')" class="layui-card"   style="background-color: #eaeaea; opacity: 0.5;"><div class="layui-card-header2">\
+                <span class="layui-badge layui-bg-green">'+data[i]["progree"]+'%</span>\
+                <span style="font-size: 16px; color: #000000;">'+data[i]['task_name'] +'</span>\
+                <span class="layui-badge icnstyle1">'+status+'</span>  <span class="layui-badge icnstyle1">'+data[i]['creator_name']+'</span> <span style="font-size: 12px; color: #999999;"> \
+                '+data[i]['creation_time']+'到'+data[i]['plan_time']+' '+icon_html+'</span></div></div>'
+                }
+                document.getElementById("sub_task_list_history").innerHTML=execution;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+          
+          })
+          .catch(function(error) {
+              console.log(error);
+          });
+  }
+  function onbuttonclick(infomess) {
+
+    if (infomess == "create_task") {
+      
+    }
+  }
+
+
+
+</script>
+
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+
+
+<!-- 请勿在项目正式环境中引用该 layui.js 地址 -->
+<script src="//unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+<script>
+layui.use(function(){
+  var laydate = layui.laydate;
+  // 年选择器
+  laydate.render({
+    elem: '#ID-laydate-type-year',
+    type: 'year'
+  });
+  
+  // 年月选择器
+  laydate.render({
+    elem: '#ID-laydate-type-month',
+    type: 'month'
+  });
+  
+  // 时间选择器
+  laydate.render({
+    elem: '#ID-laydate-type-time',
+    type: 'time'
+  });
+  
+  // 日期时间选择器
+  laydate.render({
+    elem: '#ID-laydate-type-datetime',
+    type: 'datetime'
+  });
+  // 日期时间选择器 - 日期和时间选择器同时显示（全面板）
+  laydate.render({
+    elem: '#ID-laydate-type-datetime-1',
+    type: 'datetime',
+    fullPanel: true // 2.8+
+  });
+});
+</script>
+
+
+<!--body 白色背景 -->
+<body style="background-color: #ffffff;">
+  <div style="height: 10px; left:5px; ">
+    <ul class="layui-nav"  >
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+      </li>
+
+    </ul>
+    <script>
+    function onc_menu(cl){
+      //  跳转到 "/res/"+cl
+      window.location.href = "/res/"+cl;
+    }
+  </script>
+  </div>
+
+    
+
+
+    <div class="rltb10">
+        <div class="card2 in10 " > 
+            <span class="" id="chinese_name" ></span>   <span  onclick="out()" class="" id="chinese_name" >[退出登录]</span> 
+        </div>
+
+        <div class="layui-btn-group">
+          <button onclick="get_my_sub_tasks()" type="button" class="layui-btn width35">进行中任务</button>
+          <button onclick="get_my_tasks()" type="button" class="layui-btn width35">我管理的任务</button>
+          <button onclick="get_my_history()" type="button" class="layui-btn width35">历史列表</button>
+        </div>      
+
+  <div id = 'sub_task_list' style="margin-top: 5px;">
+  </div>
+  <br><br>
+  <div class="rltb10"  id = "history_list" > 历史列表 </div>
+
+      <div id = 'sub_task_list_history' style="margin-top: 5px;">
+      </div>
+  </div>
+
+
+  <div class=" rltb10 layui-btn-container"  style="text-align: right;">
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+  <i class="layui-icon layui-icon-left"></i>
+  </button>
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-primary">
+  <i class="layui-icon layui-icon-right"></i>
+  </button>
+  
+  
+  </div>
+  
+    
+
+</body>
+</html>
+
+<script>
+
+        //单词历史列表是 get_my_history
+
+
+    function getQueryParams() {  
+    var queryParams = {};  
+    window.location.search.replace(/\??(?:([^=]+)=)?([^&#]+)(?:&#|$)/g, function(match, key, value) {  
+        queryParams[key] = value;  
+    });  
+    return queryParams;  
+    }  
+
+    layui.use(function(){
+
+   //sendJson({'g_command': 'get_users'}); 
+
+    //暂停0.5秒再执行下面的语句
+    setTimeout(function(){
+        sendJson({'g_command': 'get_my_sub_tasks'});
+    },350);
+    });
+
+    function tosubtask(sub_task_id,task_id){
+        //var get = getQueryParams();
+       
+        // task_id 转为 int 类型
+        //task_id = parseInt(task_id);
+        // sub_task_id 转为 int 类型
+        sub_task_id = parseInt(sub_task_id);
+        window.location.href = "task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
+    }
+    function totask(task_id){
+        // task_id 转为 int 类型
+        task_id = parseInt(task_id);
+        // sub_task_id 转为 int 类型
+        window.location.href = "task.html?task="+task_id;
+    }
+
+
+    function get_my_sub_tasks(){
+        sendJson({'g_command': 'get_my_sub_tasks'});
+    }
+    function get_my_tasks(){
+        sendJson({'g_command': 'get_my_tasks'});
+    }
+    function get_my_create_tasks(){
+        sendJson({'g_command': 'get_my_history'});
+    }
+    //历史的英文单词是 history
+    function get_my_history(){
+        sendJson({'g_command': 'get_my_history'});
+    }
+
+    function out(){
+      //跳转到登录页面
+      window.location.href = "/res/login2.html";
+    }
+</script>

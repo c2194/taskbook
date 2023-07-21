@@ -10,7 +10,9 @@
 </head>
  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
+<style>
 
+</style>
 
 <script>
   function sendJson(data) {
@@ -103,12 +105,38 @@
 
 <!--body 白色背景 -->
 <body style="background-color: #ffffff;">
+  <div style="height: 10px; left:5px; ">
+    <ul class="layui-nav"  >
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+      </li>
+
+    </ul>
+    <script>
+    function onc_menu(cl){
+      //  输出字符串 cl
+      window.location.href = "/res/"+cl;
+    }
+  </script>
+  </div>
 
 
 
 <!-- 给容器追加 class="layui-form-pane"，即可显示为方框风格 -->
 <!-- 创建一个div 宽高100% 里面的内容 左右边距为 10 -->
-<div style="width: 100%;height: 100%;padding: 15px;">
+<div style="width: 100%;height: 100%;padding-top: 65px;padding-left: 10px;">
 
 
 
@@ -124,11 +152,12 @@
 
   <div class="layui-form-item">
     <label class="layui-form-label">任务类型</label>
- 
+    
     <div class="layui-input-block">
         <input type="radio" name="rw" value="1" lay-filter="demo-radio-filter" title="限时类  有完成时间计划的任务"><br>
         <input type="radio" name="rw" value="2" lay-filter="demo-radio-filter" title="每日类 每日需进行的任务"><br> 
-        <input type="radio" checked name="rw"  value="3" lay-filter="demo-radio-filter" title="快报任务 临时快报已完成的工作"> 
+        <input type="radio" checked name="rw"  value="3" lay-filter="demo-radio-filter" title="快报任务 快报已完成的工作"><br>
+        <input type="radio" name="rw" value="4" lay-filter="demo-radio-filter" title="群体工作类 由创建者进行日报"><br>
       </div>
     
   </div>
@@ -140,20 +169,25 @@
         </div>
       
     </div>
-    
-      <div class="layui-form-item" id="user_list" >
+    <div id="user_list">
+      <div class="layui-form-item"  >
         <label class="layui-form-label">参与人</label>
-        <div class="layui-input-block">
-          <div id="ID-transfer-demo-showSearch" style="min-height: 400px;"></div>
-        </div>
+
       </div>
+    
+        <div id="ID-transfer-demo-showSearch" style="min-height: 400px;"></div>
+      
+
+
+    </div>
+
    
 
     
 
   <div class="layui-form-item">
     </div>
-  <div class="layui-form-item" id="task_sw" pane>
+  <div class="layui-form-item" id="task_sw" pane  style="display: none;">
     <label class="layui-form-label">开启任务</label>
     <div class="layui-input-block">
       <input type="checkbox" checked name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
@@ -275,19 +309,24 @@ layui.use(function(){
 });
 
   function select1(){
-    document.getElementById("task_sw").style.display="block";
-    document.getElementById("user_list").style.display="block";
+    document.getElementById("task_sw").style.display="none";
+    document.getElementById("user_list").style.display="none";
     document.getElementById("end_time").style.display="block";
   }
 
   function select2(){
-    document.getElementById("task_sw").style.display="block";
+    document.getElementById("task_sw").style.display="none";
     document.getElementById("user_list").style.display="block";
     document.getElementById("end_time").style.display="none";
   }
   function select3(){
     document.getElementById("task_sw").style.display="none";
     document.getElementById("user_list").style.display="none";
+    document.getElementById("end_time").style.display="none";
+  }
+  function select4(){
+    document.getElementById("task_sw").style.display="none";
+    document.getElementById("user_list").style.display="block";
     document.getElementById("end_time").style.display="none";
   }
 
@@ -309,6 +348,10 @@ layui.use(function(){
     if (value==3){
       select3();
     }
+    if (value==4){
+      select4();
+    }
+
 
   });
 

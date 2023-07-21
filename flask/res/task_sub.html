@@ -91,6 +91,13 @@
 
 
 <script>
+    window.user_id=0;
+    window.user_chinese_name="";
+    window.task=0;
+    window.sub_task_id=0;
+    window.task_create_id=0;
+    window.sub_create="";
+    window.sub_user=999999;
     var get = getQueryParams();
 
 
@@ -161,8 +168,13 @@
             
             }
             if (rdata.g_command == "get_sub_task"){
+              
               var data = rdata["data"][0];
               var sub_task_name = data["sub_task_name"];
+              window.user_id=rdata.user_id;
+              window.task_create_id = data["create_user_id"];
+              window.sub_task_id =data["id"];
+              window.sub_user = data["sub_user"];
               document.getElementById("sub_task_name").innerText = sub_task_name;
 
 
@@ -173,19 +185,45 @@
               var state = data["state"];
               var create_user_name = data["create_user_name"];
               var sub_user_name = data["sub_user_name"];
+              
+              var statestr = "";
+              if (state == 1){
+                statestr = "执行中";
+              }
+              if (state == 2){
+                statestr = "已完成";
+              }
+              if (state == 4){
+                statestr = "已取消";
+              }
+              if (state == 3){
+                statestr = "已暂停";
+              }
+
 
               var intask_info_t = '<div onclick="show_set_sub_progress();" ><span style="font-size: 14px; color: #000000;">\
-                [执行中] 完成度</span> <span class="layui-badge layui-bg-green">'+completion_rate+'%</span>\
+                ['+ statestr+'] 完成度</span> <span class="layui-badge layui-bg-green">'+completion_rate+'%</span>\
                 <span style="font-size: 14px; color: #000000;">创建</span>\
                 <span class="layui-badge icnstyle1">'+create_user_name+'</span>\
                 <span style="font-size: 14px; color: #000000;">执行</span></span>\
                 <span class="layui-badge icnstyle1">'+sub_user_name+'</span> ';
               var intask_info_d = '<span style="font-size: 12px; color: #999999;"> \
-                计划完成时间 '+end_time+' 开始时间 '+created_at+'</span> <span onclick="show_set_sub_progress();" class="layui-badge layui-bg-green">设置完成度</span>\
+                计划完成时间 '+end_time+' 开始时间 '+created_at+'</span> gxzzt\
                 </div>';
-            
+                
+              var gxzzt = '<span onclick="show_set_sub_progress();" class="layui-badge layui-bg-green">更新子状态</span>';
+              if (window.task_create_id == window.user_id || window.sub_user == window.user_id ){
+                // 替换字符串 intask_info_d 中的 gxzzt 为 gxzzt
+                var intask_info_d = intask_info_d.replace(/gxzzt/g, gxzzt);
+              }else{
+                var intask_info_d = intask_info_d.replace(/gxzzt/g, "");
+              }
+
+
+
               document.getElementById("intask_info_t").innerHTML = intask_info_t;
               document.getElementById("intask_info_d").innerHTML = intask_info_d;
+              document.getElementById("sub_task_description").innerText = sub_task_description;
 
 
 
@@ -260,7 +298,7 @@
       </div>\
     </div>\
     <div class="layui-form-item">\
-      <button type="submit" class="layui-btn"  onclick="create_setp_progress('+data['id']+');"  >确认</button>\
+      <button type="submit" class="layui-btn"  onclick="create_step_progress('+data['id']+');"  >确认</button>\
     </div>\
     '
                 document.getElementById("progree_html_form"+data['id']).style.display = "block";            
@@ -305,6 +343,12 @@
               var sub_task_id = GGet('sub_task_id');
               window.location.href="/res/task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
             }
+            if (rdata.g_command == "set_sub_step_close"){
+              var task_id = GGet('task_id');
+              var sub_task_id = GGet('sub_task_id');
+              window.location.href="/res/task_sub.html?task_id="+task_id+"&sub_task_id="+sub_task_id;
+
+            }
 
           })
           .catch(function(error) {
@@ -329,7 +373,36 @@
 
 <!--body 白色背景 -->
 <body style="background-color: #ffffff;">
-    <div class="rltb10">
+  <div style="height: 10px; left:5px; ">
+    <ul class="layui-nav"  >
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+      </li>
+      
+      <li class="layui-nav-item">
+        <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+      </li>
+
+      <li class="layui-nav-item">
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+      </li>
+
+    </ul>
+    <script>
+    function onc_menu(cl){
+      //  输出字符串 cl
+      window.location.href = "/res/"+cl;
+    }
+  </script>
+  </div>
+ 
+  
+  
+  <div class="rltb10">
     <blockquote id ="sub_task_name"  class="layui-elem-quote" style="font-size: 20px;" >这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
 
 
@@ -339,19 +412,67 @@
       <div  class="layui-form-item" >
           <input id="progressnum" type="number" min="0" max="100" step="1"   placeholder="子任务总完成度 %"  class="layui-input">
       </div>
+
+
+
+        <div class="">
+          <textarea id = "p_readme" placeholder="请输本次提交说明" name="p_readme"  class="layui-textarea"></textarea>
+        </div>
+    
+
+
       <div class="layui-form-item">
-        <button type="submit" class="layui-btn"  onclick="set_setp_progress();"  >确认</button>
+        <button id ="sub_but1" type="submit" class="layui-btn"  onclick="set_setp_progress(1);"  >确认</button> 
+        <button  id ="sub_but2"  type="submit" class="layui-btn layui-btn-primary"  onclick="set_setp_progress(3);"  >暂停</button>
+        <button id ="sub_but3"  type="submit" class="layui-btn layui-btn-primary"  onclick="set_setp_progress(2);"  >完成</button>
+        <button id ="sub_but4"  type="submit" class="layui-btn layui-btn-primary"  onclick="set_setp_progress(5);"  >进行</button>
+
       </div>
                   </div>
       <script>
         function show_set_sub_progress(){
+
           document.getElementById("sub_progress").style.display = "block";
+          
+          if (window.task_create_id == window.user_id){
+       
+
+          }else{
+            document.getElementById("sub_but2").style.display = "none";
+            document.getElementById("sub_but3").style.display = "none";
+            document.getElementById("sub_but4").style.display = "none";
+          }
+
+          
+          if (window.sub_user == window.user_id){
+            
+          }else{
+            document.getElementById("sub_but1").style.display = "none";
+          }
+            
+
+
+
+
+
         }
-        function set_setp_progress(){
+        function set_setp_progress(set_state){
+          if (window.sub_user == window.user_id || window.task_create_id == window.user_id ){
+
+          }else{
+            layer.msg('你不是执行者或者管理者，无法操作');
+            return;
+          }
           var progressnum = document.getElementById("progressnum").value;
+          var p_readme = document.getElementById("p_readme").value;
           var sub_task_id = GGet('sub_task_id');
           var task_id = GGet('task_id');
-          sendJson({'g_command': 'set_sub_progress','task_id':task_id,"progress":progressnum,'sub_task_id':sub_task_id}); 
+          // 逻辑与 的写法是 &&  逻辑或的写法是 ||
+          if (progressnum == "" && set_state==1 ){
+            layer.msg('进度不能为空');
+            return;
+          }
+          sendJson({'g_command': 'set_sub_progress','task_id':task_id,"progress":progressnum,'sub_task_id':sub_task_id,"set_state":set_state,"p_readme":p_readme}); 
         }
   
   
@@ -418,10 +539,19 @@
 
 
 
+    <div class="site-title rltb10">
+      <form id="form_task_readme" class="layui-form layui-form-pane"   >
+          
+        <div class="layui-form-item layui-form-text">
+          <label class="layui-form-label" onclick="show_sub_task_description()" >子任务说明  [点此显示]</label>
+          <div class="layui-input-block" id ="sub_task_description" style="display: none;" >
+          </div>
+        </div>
+        <div class="layui-form-item">
+        </div>
+      </form>
 
-
-    <button id="setid_123" type="button" class="layui-btn layui-btn-primary" lay-on="test-alert-btn">自定义按钮</button>
-    
+    </div>
 
 </body>
 </html>
@@ -494,6 +624,10 @@
     });
 
     function on_show_create_step(){
+      if (window.sub_user != window.user_id){
+        layer.msg('你不是执行者，无法操作');
+        return;
+      }
         document.getElementById("step_form").style.display="block";
         document.getElementById("scs_button").style.display="none";
     }
@@ -545,11 +679,29 @@
       var sp_text = document.getElementsByName("sp_text"+sub_task_id)[0].value;
       sendJson({'g_command': 'get_sub_step_list', 'sub_task_id': sub_task_id,'type':1,'progress':progress,'sp_text':sp_text});
     };
-    function create_setp_progress(step_id){
+    function create_step_progress(step_id){
+      
+      if (window.sub_user != window.user_id){
+        layer.msg('你不是执行者，无法操作');
+        return;
+      }
+
       var progress = document.getElementById("progress"+step_id).value;
       var sp_text = document.getElementById("sp_text"+step_id).value;
       sendJson({'g_command': 'create_sub_step_progress', 'step_id': step_id,'progress':progress,'sp_text':sp_text});
-    };
+    }
+    function set_setp_close(invar){
+      if (window.task_create_id == window.user_id){
+        var sub_task_id = window.sub_task_id;
+        sendJson({'g_command': 'set_sub_close', 'sub_task_id': sub_task_id,'state':invar});
+      }else{
+        layer.msg('你不是创建者，无法关闭');
+      }
 
+    }
+    function show_sub_task_description(){
+      document.getElementById("sub_task_description").style.display="block";
+
+    }
 
 </script>

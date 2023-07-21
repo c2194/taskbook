@@ -193,6 +193,32 @@ var time_html_ed = '';
   }
   </script>
 <body style="background-color: #ffffff;"></body>
+<div style="height: 10px; left:5px; ">
+  <ul class="layui-nav"  >
+    <li class="layui-nav-item">
+      <a href="#" onclick="onc_menu('my_task.html'); return false;" ><span id ="f_chinese_name" >我的</span><span class="layui-badge layui-bg-gray">M</span></span></a>
+    </li>
+    
+    <li class="layui-nav-item">
+      <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
+    </li>
+
+    <li class="layui-nav-item">
+      <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+    </li>
+
+    <li class="layui-nav-item">
+      <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+    </li>
+
+  </ul>
+  <script>
+  function onc_menu(cl){
+    //  输出字符串 cl
+    window.location.href = "/res/"+cl;
+  }
+</script>
+</div>
 
 
 <div class="container">
