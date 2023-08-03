@@ -19,12 +19,13 @@ respath = this_dir_path + '\\res'
 respath = respath.replace('\\', '/')
 print(respath)
 
-db = mysqllib.MySQL(host='localhost', port=3306, user='root', password='root', db='task')
-#db = mysqllib.MySQL(host='localhost', port=3306, user='task', password='taskAa88888888', db='task')
+#db = mysqllib.MySQL(host='localhost', port=3306, user='root', password='root', db='task')
+db = mysqllib.MySQL(host='localhost', port=3306, user='task', password='taskAa88888888', db='task')
 db.connect()
 
 app = Flask(__name__)
 CORS(app)
+app.config['SESSION_TYPE'] = 'filesystem'
 app.secret_key = 'your_secret_key'
 
 this_dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -46,7 +47,8 @@ def show_flask_version():
 @login_required
 def index():
     #return f'欢迎回来，{session["username"]}!'
-    return render_template('home.html')
+    return redirect('/login')
+    #return render_template('home.html')
 
 @app.route('/res/<path:filename>')
 def serve_file(filename):
@@ -142,8 +144,18 @@ def html():
 def endpoint():
     if request.method == 'POST':
         #获取request.data 字典
-        user_id = session['user_id']
-        chinese_name = session['chinese_name'] 
+        
+        #判断session中是否有user_id
+        if 'user_id' not in session:
+            pass
+        else:
+            user_id = session['user_id']
+        
+        #判断session中是否有chinese_name
+        if 'chinese_name' not in session:
+            pass
+        else:
+            chinese_name = session['chinese_name'] 
         data = request.get_json()
         get_command = data['g_command']
         if get_command == 'task_types':
@@ -336,7 +348,9 @@ def endpoint():
             return {'user_id':user_id,'chinese_name':chinese_name,'code': 0, 'g_command':'get_run_tasks','message': 'success', 'data': new_result}            
                 
         if get_command == 'get_task':
-            sql = 'SELECT * FROM work_tasks WHERE task_id = ' + str(data["task_id"])
+            #sql 语句 搜索 work_tasks表 关联 users ,条件是 task_id = data["task_id"]  关联 users表的user_id 关联 work_tasks表的creator
+            #sql = 'SELECT work_tasks.*,users.chinese_name FROM work_tasks INNER JOIN users ON work_tasks.creator = users.user_id WHERE task_id = ' + str(data["task_id"])
+            sql = 'SELECT work_tasks.*, users.username, users.chinese_name FROM work_tasks INNER JOIN users ON work_tasks.creator = users.user_id WHERE task_id = ' + str(data["task_id"])
             db.connect()
             result = db.read(sql)
             db.conn.close()
@@ -363,7 +377,7 @@ def endpoint():
             new_result["task_readme"] = new_result["task_readme"].replace('\n', '<br>')
             new_result["task_readme"] = new_result["task_readme"].replace(' ', '&nbsp;')
             new_result["task_readme"] = new_result["task_readme"].replace('\t', '&nbsp;&nbsp;&nbsp;&nbsp;')
-            new_result["chinese_name"] = session['chinese_name']
+            new_result["chinese_name"] = new_result['chinese_name']
 
 
             
@@ -771,13 +785,14 @@ def endpoint():
             return {'user_id':user_id,'chinese_name':chinese_name,'code': 0, 'g_command':'get_my_history','message': 'success', 'data': new_result}
         if get_command == 'get_daily_report':  #日报的英文是 daily report        
             #sql work_tasks表中的 task_status = 1 和 task_class = 1 的数据 关联 users表的user_id 得到 chinese_name
-            
+            outstr = "<br> 今日工作报告 <br> 本报告以每天 23.50 分做出的为准<br>"
+            #显示今天限时类工作
             sql = 'SELECT work_tasks.*,users.chinese_name FROM work_tasks,users WHERE work_tasks.task_status = 1 AND work_tasks.task_class IN(1,2,4) AND work_tasks.creator = users.user_id ORDER BY task_class ASC'
             
             db.connect()
             result = db.read(sql)
             new_result = []
-            outstr = "<br> 今日工作报告 <br> 本报告以每天 23.50 分做出的为准<br>"
+            
             
             work_master_lazy = {}
             work_lazy = {}
