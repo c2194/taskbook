@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Demo</title>
+  <title>我的</title>
   <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
  
   <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
@@ -162,7 +162,7 @@ legend {
 
 
 </style>
- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/res/npm/axios/dist/axios.min.js"></script>
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
 
 
@@ -497,11 +497,11 @@ layui.use(function(){
       </li>
 
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务<span class="layui-badge layui-bg-gray">A</span></a>
       </li>
 
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">日报与AI接口<span class="layui-badge layui-bg-gray">W</span></a>
       </li>
 
     </ul>
@@ -516,15 +516,15 @@ layui.use(function(){
     
 
 
-    <div class="rltb10">
+    <div class="rltb10" style="margin-top: 60px;">
         <div class="card2 in10 " > 
             <span class="" id="chinese_name" ></span>   <span  onclick="out()" class="" id="chinese_name" >[退出登录]</span> 
         </div>
 
         <div class="layui-btn-group">
-          <button onclick="get_my_sub_tasks()" type="button" class="layui-btn width35">进行中任务</button>
-          <button onclick="get_my_tasks()" type="button" class="layui-btn width35">我管理的任务</button>
-          <button onclick="get_my_history()" type="button" class="layui-btn width35">历史列表</button>
+          <button onclick="get_my_sub_tasks()" type="button" class="layui-btn width35">进行中子任务</button>
+          <button onclick="get_my_tasks()" type="button" class="layui-btn width35">我管理的主任务</button>
+          <button onclick="get_my_history()" type="button" class="layui-btn width35">我的历史子任务</button>
         </div>      
 
   <div id = 'sub_task_list' style="margin-top: 5px;">

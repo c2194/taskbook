@@ -1,0 +1,81 @@
+2023-07-23 22:50:45.343 wx.py[16] <module> -> 2023-07-23 22:51:37.868 wx.py[16] <module> -> 2023-07-23 22:53:45.381 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:53:55.850 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:06.353 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:16.777 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:27.283 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:37.627 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:48.257 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:54:58.754 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:55:08.787 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:55:18.811 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:55:29.176 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:55:39.593 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:55:50.013 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:00.412 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:10.692 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:21.203 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:31.251 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:41.759 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:56:52.134 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:02.637 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:12.803 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:23.366 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:33.440 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:43.647 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:57:54.158 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:58:04.242 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:58:15.096 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:58:25.770 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:58:36.444 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '编辑', ControlType: ListControl}
+2023-07-23 22:58:46.842 pydevd_resolver.py[189] _get_py_dictionary -> 2023-07-25 15:41:03.380 wx.py[10] <module> -> 2023-07-25 15:41:38.009 wx.py[16] <module> -> 2023-07-25 16:55:33.332 wx.py[16] <module> -> 2023-07-25 16:56:14.523 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '会话', ControlType: ListControl}
+2023-07-25 16:56:25.336 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '会话', ControlType: ListControl}
+2023-07-25 16:56:35.485 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '会话', ControlType: ListControl}
+2023-07-25 16:56:45.675 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '会话', ControlType: ListControl}
+2023-07-25 16:56:56.577 pydevd_resolver.py[189] _get_py_dictionary -> 2023-07-25 17:00:10.404 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:00:26.924 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:00:37.022 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:00:47.038 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:00:57.354 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:01:07.487 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:01:17.857 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:01:28.566 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:01:39.215 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:01:49.841 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:00.727 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:11.262 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:21.784 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:32.257 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:42.721 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:02:53.299 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:03.932 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:14.585 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:25.065 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:35.567 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:46.154 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:03:56.657 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:04:07.240 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:04:17.748 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:04:28.260 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:04:38.739 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:04:49.205 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:05:00.109 wx.py[20] <module> -> Find Control Timeout(10s): {ControlType: TextControl}
+2023-07-25 17:05:10.764 wx.py[20] <module> -> 2023-07-25 17:19:08.082 wx.py[20] <module> -> 2023-07-25 20:39:14.734 <string>[1] <module> -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:39:40.786 <string>[1] <module> -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:40:44.165 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:40:54.231 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:41:04.533 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:41:14.655 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:41:24.916 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '哈哈哈哈', ControlType: ListControl}
+2023-07-25 20:41:35.172 pydevd_resolver.py[189] _get_py_dictionary -> 2023-07-25 21:29:24.031 wx.py[50] <module> -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:30:19.958 wx.py[50] <module> -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:31:58.293 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:08.474 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:18.720 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:28.997 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:39.190 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:49.390 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:32:59.567 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:33:09.743 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:33:19.755 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:33:30.002 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
+2023-07-25 21:33:40.280 pydevd_resolver.py[189] _get_py_dictionary -> 

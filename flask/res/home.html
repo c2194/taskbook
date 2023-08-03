@@ -10,7 +10,8 @@
     /^http(s*):\/\//.test(location.href) || alert('请通过 localhost 访问');;
     </script>
  
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+ <script src="/res/npm/axios/dist/axios.min.js"></script>
+
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
 
 
@@ -100,14 +101,15 @@
             <li class="layui-nav-item">
               <a href="">我的任务<span class="layui-badge layui-bg-gray">M</span></span></a>
             </li>
-            <li class="layui-nav-item">
-              <a href="#"  onclick="onc_menu('task_list.html'); return false;">所有任务<span class="layui-badge layui-bg-gray">A</span></a>
-            </li>
 
             <li class="layui-nav-item">
-              <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+              <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务<span class="layui-badge layui-bg-gray">A</span></a>
             </li>
-
+      
+            <li class="layui-nav-item">
+              <a href="#"  onclick="onc_menu('daily_report.html'); return false;">日报与AI接口<span class="layui-badge layui-bg-gray">W</span></a>
+            </li>
+      
           </ul>
 
         </div>

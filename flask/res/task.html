@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Demo</title>
+  <title>任务</title>
   <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
  
   <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
@@ -149,7 +149,7 @@ legend {
 
 
 </style>
- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/res/npm/axios/dist/axios.min.js"></script>
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
 
 
@@ -461,13 +461,15 @@ layui.use(function(){
         <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
       </li>
 
+
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务<span class="layui-badge layui-bg-gray">A</span></a>
       </li>
 
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">日报与AI接口<span class="layui-badge layui-bg-gray">W</span></a>
       </li>
+
 
     </ul>
     <script>
@@ -480,8 +482,8 @@ layui.use(function(){
 
   
   
-  <div class="rltb10">
-    <blockquote class="layui-elem-quote" id="f_task_name"  >这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
+  <div class="rltb10" style="margin-top: 60px;">
+    <blockquote class="layui-elem-quote" id="f_task_name"  >载入中，请稍后。。。</blockquote>
     </div>
 
 
@@ -499,7 +501,7 @@ layui.use(function(){
       </div>   
     <div class="rltb10">
         <div class="card2 in10 " > 
-            <span id="task_state" > </span></span><span class="" id="chinese_name" >创建人：白寝室</span> <span class="" id = "creation_time">创建时间：</span> <span class="" id="plan_time">计划完成时间：白寝室</span>
+            <span id="task_state" > </span></span><span class="" id="chinese_name" >创建人：。。。</span> <span class="" id = "creation_time">创建时间：</span> <span class="" id="plan_time">计划完成时间：...</span>
         </div>
 
           
@@ -645,7 +647,7 @@ layui.use(function(){
           
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label" onclick="show_task_readme()" >任务说明  [点此显示]</label>
-          <div class="layui-input-block" id ="task_readme" style="display: none;" >
+          <div class="layui-input-block" id ="task_readme"  >
           </div>
         </div>
         <div class="layui-form-item">

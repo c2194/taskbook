@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Demo</title>
+  <title>子任务</title>
   <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
   <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
  
@@ -86,7 +86,8 @@
 
 </style>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/res/npm/axios/dist/axios.min.js"></script>
+
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
 
 
@@ -94,6 +95,7 @@
     window.user_id=0;
     window.user_chinese_name="";
     window.task=0;
+    window.task_id = 0;
     window.sub_task_id=0;
     window.task_create_id=0;
     window.sub_create="";
@@ -175,6 +177,8 @@
               window.task_create_id = data["create_user_id"];
               window.sub_task_id =data["id"];
               window.sub_user = data["sub_user"];
+              window.task_id = data["task_id"];
+              window.task = data["task_id"];
               document.getElementById("sub_task_name").innerText = sub_task_name;
 
 
@@ -237,7 +241,6 @@
 
 
             }
-            
             if (rdata.g_command == "get_sub_step_list") {
               var data = rdata["data"]
 
@@ -383,13 +386,15 @@
         <a href="#" onclick="onc_menu('create_maintask.html'); return false;">创建<span class="layui-badge layui-bg-gray">N</span></a>
       </li>
 
+
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务与日报<span class="layui-badge layui-bg-gray">A</span></a>
+        <a href="#"  onclick="onc_menu('task_list.html'); return false;">任务<span class="layui-badge layui-bg-gray">A</span></a>
       </li>
 
       <li class="layui-nav-item">
-        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">任务墙<span class="layui-badge layui-bg-gray">W</span></a>
+        <a href="#"  onclick="onc_menu('daily_report.html'); return false;">日报与AI接口<span class="layui-badge layui-bg-gray">W</span></a>
       </li>
+
 
     </ul>
     <script>
@@ -402,8 +407,8 @@
  
   
   
-  <div class="rltb10">
-    <blockquote id ="sub_task_name"  class="layui-elem-quote" style="font-size: 20px;" >这个貌似不用多介绍，因为你已经在太多的地方都看到</blockquote>
+  <div class="rltb10" style="margin-top: 60px;">
+    <blockquote onclick="ontit()" id ="sub_task_name"  class="layui-elem-quote" style="font-size: 20px;" >载入中，请稍后。。。</blockquote>
 
 
 
@@ -544,7 +549,7 @@
           
         <div class="layui-form-item layui-form-text">
           <label class="layui-form-label" onclick="show_sub_task_description()" >子任务说明  [点此显示]</label>
-          <div class="layui-input-block" id ="sub_task_description" style="display: none;" >
+          <div class="layui-input-block" id ="sub_task_description"  >
           </div>
         </div>
         <div class="layui-form-item">
@@ -703,5 +708,12 @@
       document.getElementById("sub_task_description").style.display="block";
 
     }
+    function ontit(){
 
+      var tourl = "/res/task.html?task="+window.task_id
+      // 跳转到 tourl
+      window.location.href = tourl;
+
+
+    }
 </script>

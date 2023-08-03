@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Demo</title>
+  <title>登录</title>
   <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
   <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
  
@@ -88,7 +88,7 @@
     .demo-login-container{width: 320px; margin: 21px auto 0;}
     .demo-login-other .layui-icon{position: relative; display: inline-block; margin: 0 2px; top: 2px; font-size: 26px;}
     </style>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/res/npm/axios/dist/axios.min.js"></script>
 <script src="http://unpkg.com/layui@2.8.8/dist/layui.js"></script> 
 
 
@@ -116,7 +116,7 @@
                     layui.layer.msg("用户名或密码错误");
                 }else{
                     layui.layer.msg("登录成功");
-                    window.location.href = "/res/home.html";
+                    window.location.href = "/res/my_task.html";
                 }
             }
         })
@@ -146,7 +146,7 @@
 <!--body 白色背景 -->
 <body style="background-color: #ffffff;">
 
-
+    
 
     <form class="layui-form">
       <div class="demo-login-container">
