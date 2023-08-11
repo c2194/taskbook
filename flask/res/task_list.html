@@ -106,6 +106,8 @@
 
 <script>
     window.me_p=0; //是否值显示我的部门 
+    window.the_department_name=0;
+    window.the_department_id=0;
     function retask_html(task_name, user_name, precen,dot,task_id,task_class) {
 
       var strhtml1 =   '<div class="idiv">\
@@ -167,6 +169,9 @@ var time_html_ed = '';
                 var update="";
                 var outhtml ="";
                 var first = 1;
+                var department_name = rdata.department_name;
+                window.the_department_name = rdata.department_name;
+                window.the_department_id = rdata.department_id;
                 // 2. 重新添加option
                 for (var i = 0; i < rdata.data.length; i++) {
 
@@ -219,6 +224,10 @@ var time_html_ed = '';
 
 
                 container.innerHTML = outhtml;
+                var me_p = document.getElementById("me_p");
+                var all_p = document.getElementById("all_p");
+
+                me_p.innerText = department_name;
 
 
                 
@@ -232,6 +241,10 @@ var time_html_ed = '';
                 var update="";
                 var outhtml ="";
                 var first = 1;
+                var department_name = rdata.department_name;
+                window.the_department_name = rdata.department_name;
+                window.the_department_id = rdata.department_id;
+                window.i_department_id = rdata.the_department_id;
                 // 2. 重新添加option
                 for (var i = 0; i < rdata.data.length; i++) {
 
@@ -278,12 +291,17 @@ var time_html_ed = '';
                 }
                 outhtml +="</div></div>"
                 //输出outhtml
-                console.log(outhtml);
+                //console.log(outhtml);
 
 
 
 
                 container.innerHTML = outhtml;
+                var me_p = document.getElementById("me_p");
+                var all_p = document.getElementById("all_p");
+
+                me_p.innerText = department_name;
+                show_p(window.i_department_id);
 
 
                 
@@ -291,7 +309,39 @@ var time_html_ed = '';
             
             }
 
+            if (rdata.g_command == "get_departments_user"){
+              var container = document.getElementById("container");
+              var count = 1;
+              var update="";
+              var outhtml ="";
+              var first = 1;
+              // 2. 重新添加option
+              var outhtml ="";
+              for (var i = 0; i < rdata.data.length; i++) {
 
+                  var idepartment_name = rdata.data[i].department_name;
+                  var idepartment_id  = rdata.data[i].department_id;
+                  outhtml = outhtml + ' <div class="site-title rltb10">\
+                    <button  onclick="set_department('+idepartment_id+');" type="button" class="layui-btn layui-btn-fluid" style = "background-color: #2f798a;" >'+idepartment_name+'</button>\
+                  </div>'
+                  outhtml = outhtml + '<div class="layui-btn-container  rltb10">';
+                  var users = rdata.data[i].users;
+                  for (var j = 0; j < users.length; j++) {
+                    var chinese_name = users[j].chinese_name;
+                    var user_id = users[j].user_id;
+                    outhtml = outhtml + '<button onclick="to_user('+user_id+');" type="button" class="layui-btn layui-btn-primary layui-btn-radius">'+chinese_name+'</button>';
+                    
+                  }
+                  outhtml = outhtml + '</div>';
+
+                  
+
+              }
+
+              container.innerHTML = outhtml;
+
+
+            }
 
              
           })
@@ -368,16 +418,32 @@ var time_html_ed = '';
 
     function set_d(val){
       window.me_p = val;
-      if (val == 1) {
-        document.getElementById("me_p").style="background-color: #439580;color: #ffffff;"
-        document.getElementById("all_p").style="background-color: #ffffff;color: #666666;"
-        
-      } else {
+      if (val == 0) {
         document.getElementById("me_p").style="background-color: #ffffff;color: #666666;"
         document.getElementById("all_p").style="background-color: #439580;color: #ffffff;"
+        
+      } else {
+        document.getElementById("me_p").style="background-color: #439580;color: #ffffff;"
+        document.getElementById("all_p").style="background-color: #ffffff;color: #666666;"
+
       }
       the_function();
     }
+
+    function show_p(val){
+      if (val == 0) {
+        document.getElementById("me_p").style="background-color: #ffffff;color: #666666;"
+        document.getElementById("all_p").style="background-color: #439580;color: #ffffff;"
+        
+      } else {
+        document.getElementById("me_p").style="background-color: #439580;color: #ffffff;"
+        document.getElementById("all_p").style="background-color: #ffffff;color: #666666;"
+
+      }
+     
+    }
+
+
     function get_run_tasks() {
       the_function = get_run_tasks;
       sendJson({"g_command": "get_run_tasks","department":window.me_p});
@@ -387,8 +453,27 @@ var time_html_ed = '';
       sendJson({"g_command": "get_tasks","department":window.me_p});
     }
 
+    function department_list(){
+      sendJson({"g_command": "get_departments_user"});
+
+    }
+
+    function set_department(ivar){
+      window.me_p = ivar;
+      get_run_tasks();
+
+
+
+    }
+
+    function to_user(ivar){
+      window.location.href = "/res/user_task.html?user_id="+ivar;
+    }
+
+
+
     set_d(0);//默认所有部门
-    get_run_tasks();
+    
 
 
 

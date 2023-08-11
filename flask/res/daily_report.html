@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI</title>
   <style>
+    .class-bt{
+      font-size: 17px;
+    background-color: #0851180d;
+    color: #000000;
+    }
     .layui-btn-group {
       display: flex;
       font-size: 0;
@@ -303,7 +308,7 @@
 
         }
 
-        if (rdata.g_command = "get_daily_report"){
+        if (rdata.g_command == "get_daily_report"){
 
           document.getElementById("container").innerHTML = rdata.outstr;
 
@@ -311,6 +316,26 @@
 
 
         }
+
+        if (rdata.g_command == "get_departments") {
+          var container = document.getElementById("container");
+          var count = 1;
+          var update = "";
+          var outhtml = "";
+          var first = 1;
+          // 2. 重新添加option
+          for (var i = 0; i < rdata.data.length; i++) {
+            var department_name = rdata.data[i].department_name;
+            var department_id = rdata.data[i].department_id;
+            outhtml = outhtml + ' <div class="site-title rltb10">\
+                    <button  onclick="get_department_report('+department_id+');" type="button" class="layui-btn layui-btn-fluid" style = "background-color: #2f798a;" >'+department_name+'</button>\
+                  </div>'
+         
+          }
+          container.innerHTML = outhtml;
+        }
+
+
 
 
       })
@@ -367,7 +392,7 @@
 <div class="layui-btn-group" style="display: flex;" >
 <button  type="button" class="layui-btn width35">日简报</button>
 <button type="button" class="layui-btn width35">日细则报告</button>
-<button type="button" class="layui-btn width35">部门日报</button>
+<button onclick="get_departments()"  type="button" class="layui-btn width35">部门日报</button>
 </div>      
 
 
@@ -424,7 +449,19 @@
     sendJson({ "g_command": "get_daily_report"});
   }
 
-  set_d(0);//默认所有部门
+  function get_departments() {
+    sendJson({ "g_command": "get_departments" });
+  }
+
+  function get_department_report(dpid){
+    sendJson({ "g_command": "get_department_report", "department": dpid });
+
+  }
+
+
+
+
+  //set_d(0);//默认所有部门
   get_daily_report();
 
 

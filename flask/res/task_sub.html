@@ -100,6 +100,7 @@
     window.task_create_id=0;
     window.sub_create="";
     window.sub_user=999999;
+    window.m_percent = 0;
     var get = getQueryParams();
 
 
@@ -179,7 +180,9 @@
               window.sub_user = data["sub_user"];
               window.task_id = data["task_id"];
               window.task = data["task_id"];
+              window.m_percent = data["completion_rate"];
               document.getElementById("sub_task_name").innerText = sub_task_name;
+              //document.getElementById["m_percent"].value = window.m_percent;
 
 
               var sub_task_description = data["sub_task_description"];
@@ -205,6 +208,7 @@
               }
 
 
+
               var intask_info_t = '<div onclick="show_set_sub_progress();" ><span style="font-size: 14px; color: #000000;">\
                 ['+ statestr+'] 完成度</span> <span class="layui-badge layui-bg-green">'+completion_rate+'%</span>\
                 <span style="font-size: 14px; color: #000000;">创建</span>\
@@ -212,7 +216,7 @@
                 <span style="font-size: 14px; color: #000000;">执行</span></span>\
                 <span class="layui-badge icnstyle1">'+sub_user_name+'</span> ';
               var intask_info_d = '<span style="font-size: 12px; color: #999999;"> \
-                计划完成时间 '+end_time+' 开始时间 '+created_at+'</span> gxzzt\
+                计划 '+end_time+' 创建 '+created_at+'</span> gxzzt\
                 </div>';
                 
               var gxzzt = '<span onclick="show_set_sub_progress();" class="layui-badge layui-bg-green">更新子状态</span>';
@@ -222,12 +226,44 @@
               }else{
                 var intask_info_d = intask_info_d.replace(/gxzzt/g, "");
               }
+              
+              if (data['link_task']>0){
+
+                intask_info_d = intask_info_d +  ' <span onclick="onc_menu(\'task.html?task='+data['link_task']+'\');" class="layui-badge layui-bg-blue">同步</span>';
+
+              }else if (window.sub_user == window.user_id){
+                onclick=" return false;"
+                 intask_info_d = intask_info_d +  ' <span onclick="onc_menu(\'create_maintask.html?link_sub_task_id='+window.sub_task_id+'\');" class="layui-badge layui-bg-blue">创建链接任务</span>';
+              }
 
 
 
               document.getElementById("intask_info_t").innerHTML = intask_info_t;
               document.getElementById("intask_info_d").innerHTML = intask_info_d;
               document.getElementById("sub_task_description").innerText = sub_task_description;
+
+
+              var sub_progress = rdata["sub_progress"];
+              var sub_progress_length = sub_progress.length;
+              var sub_progress_html = "";
+              for (var i = 0; i < sub_progress_length; i++) {
+
+                var sup_sub_id = sub_progress[i]['sup_sub_id'];
+                var sup_sub_state =  ""
+                if (sub_progress[i]['sup_sub_id'] == 1){
+                  sup_sub_state = "[进行] <span class=\"layui-badge icnstyle1\">"+sub_progress[i]['sup_progress']+"%</span>";
+                }else if (sub_progress[i]['sup_sub_id'] == 2){
+                  sup_sub_state = "[完成] ";
+                }else if (sub_progress[i]['sup_sub_id'] == 3){
+                  sup_sub_state = "[暂停] ";
+                }else if (sub_progress[i]['sup_sub_id'] == 4){
+                sup_sub_state = "[取消] ";
+                }
+
+                var sub_progress_html = sub_progress_html + '<div style="background-color: rgb(252, 252, 252);" >'+ sup_sub_state +" "+ sub_progress[i]["sup_readame"]+' '+sub_progress[i]['sup_time']+'\
+                </div>';
+              }
+              document.getElementById("intask_info_p").innerHTML = sub_progress_html;
 
 
 
@@ -477,6 +513,12 @@
             layer.msg('进度不能为空');
             return;
           }
+          if (set_state==2 || set_state==3 || set_state==5 ){
+            if (progressnum == ""){
+              progressnum = window.m_percent;
+
+            }
+          }
           sendJson({'g_command': 'set_sub_progress','task_id':task_id,"progress":progressnum,'sub_task_id':sub_task_id,"set_state":set_state,"p_readme":p_readme}); 
         }
   
@@ -489,19 +531,9 @@
         <div class="layui-card-header" id="intask_info_t">
                 </div>
 
-
-
-
-
-    
-
-
-
-
-
-        
-
         <div class="layui-card-body" id="intask_info_d">
+        </div>
+        <div class="layui-card-body" id="intask_info_p">
         </div>
       </div>
       </div>
@@ -606,6 +638,12 @@
       senddata['task_id']=task_id;
       senddata['sub_task_id']=sub_task_id;
       var step_name = document.getElementsByName("step_name")[0].value;
+      if (step_name == ""){
+        layer.msg('步骤名不能为空');
+        return;
+      }
+
+
       var step_readme = document.getElementsByName("step_readme")[0].value;
       senddata['step_name']=step_name;
       senddata['step_readme']=step_readme;
@@ -647,7 +685,7 @@
             <div class="layui-form-item">\
               <label class="layui-form-label">进度</label>\
               <div class="layui-input-block">\
-                <input type="number" min="0" max="100" step="1"  name="progress"  placeholder="总的完成度 %" lay-verify="required" class="layui-input">\
+                <input value="0" type="number" min="0" max="100" step="1"  name="progress" id = "m_percent"  placeholder="总的完成度 %" lay-verify="required" class="layui-input">\
             </div>\
             </div>\
             <div class="layui-form-item layui-form-text">\

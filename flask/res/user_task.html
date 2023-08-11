@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>我的</title>
+  <title>他她的</title>
   <!-- 请勿在项目正式环境中引用该 layui.css 地址 -->
  
   <link href="//unpkg.com/layui@2.8.8/dist/css/layui.css" rel="stylesheet">
@@ -518,13 +518,13 @@ layui.use(function(){
 
     <div class="rltb10" style="margin-top: 60px;">
         <div class="card2 in10 " > 
-            <span class="" id="chinese_name" ></span>   <span  onclick="out()" class="" id="chinese_name" >[退出登录]</span> 
+            <span class="" id="chinese_name" ></span>   <span   class="" id="chinese_name" >  的工作情形</span> 
         </div>
 
         <div class="layui-btn-group">
           <button onclick="get_my_sub_tasks()" type="button" class="layui-btn width35">进行中子任务</button>
-          <button onclick="get_my_tasks()" type="button" class="layui-btn width35">我管理的主任务</button>
-          <button onclick="get_my_history()" type="button" class="layui-btn width35">我的历史子任务</button>
+          <button onclick="get_my_tasks()" type="button" class="layui-btn width35">管理的主任务</button>
+          <button onclick="get_my_history()" type="button" class="layui-btn width35">历史子任务</button>
         </div>      
 
   <div id = 'sub_task_list' style="margin-top: 5px;">
@@ -556,7 +556,11 @@ layui.use(function(){
 <script>
 
         //单词历史列表是 get_my_history
-
+    function GGet(key){
+      var searchParams = new URLSearchParams(window.location.search);
+      var parameterValue = searchParams.get(key);
+      return parameterValue;
+    }
 
     function getQueryParams() {  
     var queryParams = {};  
@@ -572,7 +576,8 @@ layui.use(function(){
 
     //暂停0.5秒再执行下面的语句
     setTimeout(function(){
-        sendJson({'g_command': 'get_my_sub_tasks','user_id':0});
+        var user_id = GGet("user_id");
+        sendJson({'g_command': 'get_my_sub_tasks','user_id':user_id});
     },350);
     });
 
@@ -594,17 +599,21 @@ layui.use(function(){
 
 
     function get_my_sub_tasks(){
-        sendJson({'g_command': 'get_my_sub_tasks','user_id':0});
+      var user_id = GGet("user_id");
+        sendJson({'g_command': 'get_my_sub_tasks','user_id':user_id});
     }
     function get_my_tasks(){
-        sendJson({'g_command': 'get_my_tasks','user_id':0});
+      var user_id = GGet("user_id");
+        sendJson({'g_command': 'get_my_tasks','user_id':user_id});
     }
     function get_my_create_tasks(){
-        sendJson({'g_command': 'get_my_history','user_id':0});
+      var user_id = GGet("user_id");
+        sendJson({'g_command': 'get_my_history','user_id':user_id});
     }
     //历史的英文单词是 history
     function get_my_history(){
-        sendJson({'g_command': 'get_my_history','user_id':0});
+      var user_id = GGet("user_id");
+        sendJson({'g_command': 'get_my_history','user_id':user_id});
     }
 
     function out(){

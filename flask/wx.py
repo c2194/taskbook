@@ -1,32 +1,56 @@
-import pandas as pd
-import numpy as np
 
 from uiautomation import WindowControl,MenuControl
 import uiautomation as automation
 import openai
+import getapi
+import mate
 
-openai.api_key = "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"
+
+
+openai.api_key = "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"
+
+wx = WindowControl( Name='深圳内部小分队')
+print(wx)
+#切换到窗口
+wx.SwitchToThisWindow()
+
+def call_back(result,json_obj,state):
+    outstr = result["outstr"]
+    #把字符串outstr 中的 \n 换成 {Shift}{Enter}
+    outstr = outstr.replace("\n","{Shift}{Enter}")
+
+
+    wx.EditControl(Name="输入").SendKeys(outstr)
+    wx.ButtonControl(Name="发送(S)").Click()
+
+
 
 def ask(question, context=None):
     if context is None:
         prompt = question
     else:
         prompt = f"{context}\n{question}"
-    response = openai.Completion.create(
-        #engine="davinci",
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.5,
-        frequency_penalty=0.5,
-        presence_penalty=0.5,
-    )
-    if context is None:
-        return response.choices[0].text.strip()
-    else:
-        return response.choices[0].text.replace(context, "").strip()
+    try:
+        response = openai.Completion.create(
+            #engine="davinci",
+            engine="text-davinci-003",
+            prompt=prompt,
+            max_tokens=1024,
+            n=1,
+            stop=None,
+            temperature=0.5,
+            frequency_penalty=0.5,
+            presence_penalty=0.5,
+        )
+        if context is None:
+            return response.choices[0].text.strip()
+        else:
+            return response.choices[0].text.replace(context, "").strip()
+    
+    except:
+        pass
+    
+    
 context = None
 
 
@@ -40,11 +64,9 @@ def chat(question,context=None):
 
 
 
-wx = WindowControl( Name='深圳内部小分队')
 
-print(wx)
-#切换到窗口
-wx.SwitchToThisWindow()
+
+
 
 #hw = wx.ListControl(Name='会话')
 
@@ -61,6 +83,7 @@ def get_message(chobj): #信息的单词是
 
 
 context = "你好"
+get_api = getapi.get_api(call_back)
 while True:
 
     try:
@@ -97,9 +120,17 @@ while True:
                 #sendMsg = '\u2005你们好'
                 #过了掉\u2005
                 sendMsg = sendMsg.replace('\u2005','') 
-                getchat = chat(sendMsg,context)
-                wx.EditControl(Name="输入").SendKeys(getchat)
-                wx.ButtonControl(Name="发送(S)").Click()
+
+                
+                tcommand = mate.get_mate(sendMsg)
+
+                if tcommand != False:
+                    get_api.add_get_api(tcommand[0])
+                else:
+                    #getchat = chat(sendMsg,context)
+                    #wx.EditControl(Name="输入").SendKeys(getchat)
+                    wx.EditControl(Name="输入").SendKeys("今天墙太高，翻的超时了！")
+                    wx.ButtonControl(Name="发送(S)").Click()
 
 
 
