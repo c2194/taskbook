@@ -78,4 +78,4 @@
 2023-07-25 21:33:09.743 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
 2023-07-25 21:33:19.755 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
 2023-07-25 21:33:30.002 pydevd_resolver.py[189] _get_py_dictionary -> Find Control Timeout(10s): {Name: '消息', ControlType: EditControl}
-2023-07-25 21:33:40.280 pydevd_resolver.py[189] _get_py_dictionary -> 
+2023-07-25 21:33:40.280 pydevd_resolver.py[189] _get_py_dictionary -> 2023-08-11 22:07:23.776 wx2.py[51] <module> -> 2023-08-11 22:32:22.106 wx2.py[54] <module> -> 

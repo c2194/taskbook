@@ -10,6 +10,15 @@ context = "你好"
 
 openai.api_key = "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"
 
+
+   
+
+
+
+
+
+
+
 def ask(question, context):
     if context is None:
         prompt = question

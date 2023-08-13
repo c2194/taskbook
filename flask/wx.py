@@ -70,7 +70,7 @@ def chat(question,context=None):
 
 #hw = wx.ListControl(Name='会话')
 
-
+context = None
 lodmess = []
 bot_name = "机器人-小哆"
 
