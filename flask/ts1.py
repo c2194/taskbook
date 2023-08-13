@@ -2016,7 +2016,7 @@ def endpoint():
 
 
         
-        if get_command == 'get_department_report_easy':  #部门日报简略版本，生成用于推送的文本
+        if get_command == 'get_department_report_easy':  #部门计划，是日报简略版本，生成用于推送的文本
             
             department = data['department']
             #根据 department 获取部门名称
@@ -2038,7 +2038,7 @@ def endpoint():
 
 
             #创建变量  outstr 内容是   部门名称 +  当前时间 +  ”本报告以每天 23.50 分做出的为准"
-            outstr = ""+  department_name+"_"+now_ymd_hms +"_部门工作\n\n"
+            outstr =  department_name+"_"+now_ymd_hms +"\n\n"+"工作计划(不包含执行情况)\n\nguanb"
 
 
 
@@ -2114,7 +2114,7 @@ def endpoint():
                     outstr = outstr + mstr + ''
                 
 
-
+                '''   
                 #查询task_execution表中的数据，条件是 task_id = i['task_id'] ，execution_time 倒排序
                 sql = 'SELECT * FROM task_execution WHERE task_id = ' + str(i['task_id']) + ' AND    DATE(execution_time) = "'+now_ymd+'"  ORDER BY execution_time DESC'
                 
@@ -2127,8 +2127,9 @@ def endpoint():
                     work_master_lazy[i['chinese_name']] = 1
                 else:
                     pass
-                outstr = outstr +"\n"
-            
+                '''
+
+                
            
             #把ourstr 字符串中的换行符替换为 <br>
 
@@ -2213,7 +2214,7 @@ def endpoint():
             #把ourstr 字符串中的换行符替换为 <br>
 
 
-            outstr = outstr+"\n群体类工作:\n\n"
+            outstr = outstr+"\n群体类工作:\n"
 
             sql = 'SELECT work_tasks.*,users.chinese_name FROM work_tasks,users WHERE work_tasks.created_department = '+str( department)+' AND work_tasks.task_status = 1 AND work_tasks.task_class IN(4) AND work_tasks.creator = users.user_id ORDER BY task_class ASC'
             
@@ -2272,6 +2273,7 @@ def endpoint():
                     tstr = tstr + "&nbsp&nbsp"+str(the_num) + '. [' + j['chinese_name']
                     mstr = mstr + j['chinese_name'] + ' '
                 mstr = mstr + "]"
+                outstr = outstr + mstr + '\n'
             outstr = outstr + mstr + "\n"
 
            

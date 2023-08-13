@@ -15,15 +15,27 @@ def run_time(hour,minute,second):
     return hour*3600+minute*60+second
 
 #把要执行得时间点和要执行的方法放到一个列表中
-run_list.append([run_time(16,35,00),{"g_command":"get_department_report_easy","department":4},1])
-run_list.append([run_time(12,0,0),{"g_command":"get_department_report_easy","department":3},1])
+run_list.append([run_time(10,8,0),{"g_command":"get_department_report_easy","department":3},1,"【预执行命令测试】哆儿，今天10.08获取市场部工作计划"])
+run_list.append([run_time(10,18,0),{"g_command":"get_department_report_easy","department":2},1,"【预执行命令测试】哆儿，今天10.18获取直播部工作计划"])
+run_list.append([run_time(10,28,0),{"g_command":"get_department_report_easy","department":4},1,"【预执行命令测试】哆儿，今天10.28获取生产售货部工作计划"])
+run_list.append([run_time(10,38,0),{"g_command":"get_department_report_easy","department":1},1,"【预执行命令测试】哆儿，今天10.38获取技术货部工作计划"])
+run_list.append([run_time(10,58,0),{"g_command":"get_department_report_easy","department":5},1,"【预执行命令测试】哆儿，今天10.58获取办公室工作计划"])
+
+
+
+
 
 
 
 
 def call_back(result,json_obj,state):
+    
+
+    
     print(result)
     pass
+
+
 
 get_api = getapi.get_api(call_back)
 #时间戳开始时间是 1970-01-01 08:00:00
@@ -50,6 +62,10 @@ def alarm_clock():
             nowtime = int(time.time()) #现在的时间错
             if nowtime == gettime: #
                 i[2]=0
+                  
+                
+
+                
                 get_api.add_get_api(i[1])
     
     
